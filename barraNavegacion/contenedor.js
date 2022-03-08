@@ -3,14 +3,12 @@ import {NavigationContainer} from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-// pantallas
 import SInicio from './pantallas/inicio/inicio'
 import SMInicio from './pantallas/movimientos/inicio'
 import SPInicio from './pantallas/presupuestos/inicio'
 import SRInicio from './pantallas/recomendaciones/inicio';
 import SReInicio from './pantallas/recordatorios/inicio';
 
-// nombre de las pantallas
 const nombrePantallas={
     'i':'IInicio',
     'm':'MInicio',
