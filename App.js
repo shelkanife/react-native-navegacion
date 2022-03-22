@@ -7,11 +7,15 @@
  */
 
 import React from 'react';
-import Contenedor from './barraNavegacion/contenedor';
+import { NavigationContainer } from '@react-navigation/native';
+import SignNavegator from './SignScreens/SingIn';
+
 
 const App = () => {
   return(
-    <Contenedor />
+    <NavigationContainer screenOptions={{}}>
+      <SignNavegator />
+    </NavigationContainer>
   )
 }
 

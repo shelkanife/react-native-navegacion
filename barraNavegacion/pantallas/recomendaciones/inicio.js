@@ -20,8 +20,8 @@ const RInicio = ({navigation}) => {
 const SRInicio = () => {
     return(
         <Stack.Navigator screenOptions={{ headerShown: true }}>
-            <Stack.Screen name="RInicio" component={RInicio} options={{ title:'Pantalla de Recomendaciones' }}/>
-            <Stack.Screen name="RDetalles" component={RDetalle} options={{ title:'Pantalla de Detalle de Recomendaciones' }}/>
+            <Stack.Screen name="RInicio" component={RInicio} options={{ title:'Recomendaciones' }}/>
+            <Stack.Screen name="RDetalles" component={RDetalle} options={{ title:'Detalle de Recomendaciones' }}/>
         </Stack.Navigator>
     )
 }

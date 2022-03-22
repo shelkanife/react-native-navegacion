@@ -1,5 +1,5 @@
 import React from 'react'
-import {View,Text,Button} from 'react-native'
+import {View,Text,Button,StyleSheet} from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import IAhorros from './resumenAhorros'
@@ -13,7 +13,7 @@ const Inicio = ({navigation}) =>{
 
     <View style={{flex: 1}}>
         <Text>Pantalla de inicio</Text>
-        <Button title='Resumen de Ahorros'
+        <Button title='Resumen de Ahorros' 
         onPress={() => navigation.navigate('IAhorros')}></Button>
         <Button title='Resumen de Gastos'
         onPress={()=>navigation.navigate('IGastos')}></Button>
@@ -29,12 +29,13 @@ const Inicio = ({navigation}) =>{
 const SInicio = () => {
     return(
         <Stack.Navigator screenOptions={{ headerShown: true }}>
-            <Stack.Screen name="IInicio" component={Inicio} options={{ title:'Pantalla de inicio' }}/>             
-            <Stack.Screen name="IAhorros" component={IAhorros} options={{ title:'Pantalla de resumen de ahorros' }}/>             
-            <Stack.Screen name="IGastos" component={IGastos}  options={{ title:'Pantalla de resumen de gastos' }}/>
-            <Stack.Screen name="IIngresos" component={IIngresos} options={{ title:'Pantalla de resumen de ingresos' }}/>
+            <Stack.Screen name="IInicio" component={Inicio} options={{ title:'Inicio' }}/>             
+            <Stack.Screen name="IAhorros" component={IAhorros} options={{ title:'Resumen de ahorros' }}/>             
+            <Stack.Screen name="IGastos" component={IGastos}  options={{ title:'Resumen de gastos' }}/>
+            <Stack.Screen name="IIngresos" component={IIngresos} options={{ title:'Resumen de ingresos' }}/>
         </Stack.Navigator>
     )
 }
+
 
 export default SInicio
