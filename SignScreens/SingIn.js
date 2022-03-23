@@ -5,29 +5,23 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Contenedor from '../barraNavegacion/contenedor';
 import ForgotPassword from './ForgotPassword';
 import SignUp from './SignUp';
+import FormGroup from './FormGroup'
 import { styles } from './styles';
 
 const Stack = createNativeStackNavigator()
 
-const Item = ({nameField,placeholder}) =>{
-    return (
-        <View>
-            <Text style={styles.label}>{nameField}</Text>
-            <TextInput style={styles.txtInput} placeholder={placeholder} keyboardType='email-address' />
-        </View>        
-    )
-}
+
 const SignIn = ({navigation}) => {
     return(
         <View style={styles.mainContainer}>
             <ScrollView contentContainerStyle={{flex:1}}>
                 <View style={styles.iconView}>
-                    <Ionicons style={styles.icon}  name='logo-usd'/>
+                    <Ionicons style={styles.icon} name='logo-usd'/>
                 </View>
                 <View style={styles.form}>
                     <Text style={styles.title}>Iniciar Sesión</Text>
-                    <Item nameField='Correo electrónico' placeholder='Ingresa correo electrónico'/>
-                    <Item nameField='Contraseña' placeholder='Ingresa contraseña'/>
+                    <FormGroup nameField='Correo electrónico' placeholder='Ingresa correo electrónico'/>
+                    <FormGroup nameField='Contraseña' placeholder='Ingresa contraseña'/>
                     <TouchableOpacity 
                         style={styles.btn}
                         onPress={()=>navigation.navigate('Contenedor')}>

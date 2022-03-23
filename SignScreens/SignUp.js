@@ -1,16 +1,9 @@
 import React from 'react';
 import {ScrollView,Text,View,TextInput,TouchableOpacity} from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import FormGroup from './FormGroup';
 import { styles } from './styles';
 
-const Item = ({nameField,placeholder}) =>{
-    return (
-        <View>
-            <Text style={styles.label}>{nameField}</Text>
-            <TextInput style={styles.txtInput} placeholder={placeholder} keyboardType='email-address' />
-        </View>        
-    )
-}
 
 const SignUp=()=>{
     return(
@@ -21,9 +14,9 @@ const SignUp=()=>{
                 </View>
                 <View style={styles.form}>
                     <Text style={styles.title}>Registrate</Text>
-                    <Item nameField='Nombre' placeholder='Ingresa nombre'/>
-                    <Item nameField='Correo electrónico' placeholder='Ingresa correo electrónico' />
-                    <Item nameField='Contraseña' placeholder='Ingresa contraseña' />
+                    <FormGroup nameField='Nombre' placeholder='Ingresa nombre'/>
+                    <FormGroup nameField='Correo electrónico' placeholder='Ingresa correo electrónico' />
+                    <FormGroup nameField='Contraseña' placeholder='Ingresa contraseña' />
                     <TouchableOpacity style={styles.btn}>
                         <Text style={{color:"#ffffff",fontSize:16}}>Crear cuenta</Text>
                     </TouchableOpacity>

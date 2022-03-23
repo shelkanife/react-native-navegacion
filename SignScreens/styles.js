@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native'
 
-export const styles=StyleSheet.create({
+const styles=StyleSheet.create({
     mainContainer:{
         flex:1,
         backgroundColor:"gray"
@@ -14,8 +14,13 @@ export const styles=StyleSheet.create({
         backgroundColor:'#1E63CB',
     },
     icon:{
+        borderWidth:2,
+        borderColor:"#ffffff",
+        textAlign: 'center',
         color:'#ffffff',
-        fontSize:120,
+        fontSize:115,
+        paddingLeft:5,
+        borderRadius:100
     },
     title:{
         color:'black',
@@ -30,16 +35,6 @@ export const styles=StyleSheet.create({
         flexDirection:'column',
         borderRadius:5,
         padding:16
-    },
-    txtInput:{
-        borderWidth:2,
-        borderColor:'#1E63CB',
-        fontSize:16,
-        paddingHorizontal:16,
-        borderRadius:16
-    },
-    label:{
-        fontSize:16
     },
     forgot:{
         marginTop:16,
@@ -60,3 +55,20 @@ export const styles=StyleSheet.create({
         backgroundColor:'#ffffff'
     }
 })
+
+const itemStyles={
+    txtInput:{
+        borderWidth:2,
+        borderColor:'#1E63CB',
+        fontSize:16,
+        paddingHorizontal:16,
+        borderRadius:16
+    },
+    label:{
+        fontSize:16
+    }
+}
+export  {
+    styles,
+    itemStyles
+}
