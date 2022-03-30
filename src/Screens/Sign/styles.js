@@ -1,9 +1,9 @@
-import {StyleSheet} from 'react-native'
+import {StyleSheet,Dimensions} from 'react-native'
 
 const styles=StyleSheet.create({
     mainContainer:{
         flex:1,
-        backgroundColor:"gray"
+        backgroundColor:"white"
     },
     iconView:{
         flex:1,
@@ -37,32 +37,36 @@ const styles=StyleSheet.create({
         padding:16
     },
     forgot:{
-        marginTop:16,
+        // marginTop:16,
         alignItems:'center',
         justifyContent:'center',
+        alignSelf:'center'
     },
     btn:{
         marginTop:16,
         padding:16,
         borderRadius:20,
         backgroundColor:'#1E63CB',
-        alignItems:'center',
+        justifyContent:'center',
+        alignSelf:'center',
+        width:Dimensions.get('window').width/2
     },
     signUp:{
         display:"flex",
         flexDirection:"row",
         justifyContent:'center',
-        backgroundColor:'#ffffff'
+        backgroundColor:'#ffffff',
+        // marginBottom:16
     }
 })
 
 const itemStyles={
+    item:{
+        borderWidth:2
+    },
     txtInput:{
-        borderWidth:2,
-        borderColor:'#1E63CB',
         fontSize:16,
         paddingHorizontal:16,
-        borderRadius:16
     },
     label:{
         fontSize:16

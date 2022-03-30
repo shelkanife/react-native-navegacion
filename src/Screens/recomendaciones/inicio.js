@@ -11,7 +11,7 @@ const RInicio = ({navigation}) => {
         <View style={{flex:1}}>
             <Text>Pantalla "Recomendaciones"</Text>
             <Button title='Detalle de recomendacion'
-            onPress={() => navigation.navigate('RDetalles')}></Button>
+            onPress={() => navigation.navigate('RecommendationsDetails')}></Button>
 
         </View>
     )
@@ -20,8 +20,8 @@ const RInicio = ({navigation}) => {
 const SRInicio = () => {
     return(
         <Stack.Navigator screenOptions={{ headerShown: true }}>
-            <Stack.Screen name="RInicio" component={RInicio} options={{ title:'Recomendaciones' }}/>
-            <Stack.Screen name="RDetalles" component={RDetalle} options={{ title:'Detalle de Recomendaciones' }}/>
+            <Stack.Screen name="Recommendations" component={RInicio} options={{ title:'Recomendaciones' }}/>
+            <Stack.Screen name="RecommendationsDetails" component={RDetalle} options={{ title:'Detalle de Recomendaciones' }}/>
         </Stack.Navigator>
     )
 }

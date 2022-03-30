@@ -28,7 +28,7 @@ const MInicio = ({navigation}) => {
 const SMInicio = () => {
     return(
         <Stack.Navigator screenOptions={{ headerShown: true }}>
-            <Stack.Screen name="MInicio" component={MInicio} options={{ title:'Movimientos' }}/>
+            <Stack.Screen name="Movements" component={MInicio} options={{ title:'Movimientos' }}/>
             <Stack.Screen name="MRegistrar" component={MRegistrar} options={{ title:'Registrar movimiento' }}/>
             <Stack.Screen name="MDetalles" component={MDetalles} options={{ title:'Detalle de moviento' }}/>
         </Stack.Navigator>

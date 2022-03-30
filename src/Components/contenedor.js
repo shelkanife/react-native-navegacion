@@ -3,18 +3,18 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
 
-import SInicio from './pantallas/inicio/inicio'
-import SMInicio from './pantallas/movimientos/inicio'
-import SPInicio from './pantallas/presupuestos/inicio'
-import SRInicio from './pantallas/recomendaciones/inicio';
-import SReInicio from './pantallas/recordatorios/inicio';
+import SInicio from '../Screens/inicio/inicio'
+import SMInicio from '../Screens/movimientos/inicio'
+import SPInicio from '../Screens/presupuestos/inicio'
+import SRInicio from '../Screens/recomendaciones/inicio';
+import SReInicio from '../Screens/recordatorios/inicio';
 
 const nombrePantallas={
-    'i':'IInicio',
-    'm':'MInicio',
-    'p':'PInicio',
-    'r':'RInicio',
-    're':'ReInicio'
+    'i':'Inicio',
+    'm':'Movimientos',
+    'p':'Presupuestos',
+    'r':'Recomendaciones',
+    're':'Notificaciones'
 }
 
 const Tab = createBottomTabNavigator()
@@ -49,14 +49,13 @@ const Contenedor = () => {
 
                 return <Ionicons name={icono} size={size} color={color} />;
             },
-            headerShown:false
-            })}
-            tabBarOptions={{
+            headerShown:false,
             activeTintColor: '#1E63CB',
             inactiveTintColor: 'grey',
             labelStyle: { paddingBottom: 10, fontSize: 10 },
             style: { padding: 10, height: 70}
-            }}>
+            })}
+            >
 
             <Tab.Screen name={nombrePantallas.i} component={SInicio} />
             <Tab.Screen name={nombrePantallas.m} component={SMInicio} />

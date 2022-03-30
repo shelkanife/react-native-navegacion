@@ -14,11 +14,11 @@ const Inicio = ({navigation}) =>{
     <View style={{flex: 1}}>
         <Text>Pantalla de inicio</Text>
         <Button title='Resumen de Ahorros' 
-        onPress={() => navigation.navigate('IAhorros')}></Button>
+        onPress={() => navigation.navigate('Saving')}></Button>
         <Button title='Resumen de Gastos'
-        onPress={()=>navigation.navigate('IGastos')}></Button>
+        onPress={()=>navigation.navigate('Outcome')}></Button>
         <Button title='Resumen de Ingresos'
-        onPress={()=>navigation.navigate('IIngresos')}></Button>
+        onPress={()=>navigation.navigate('Income')}></Button>
 
     </View>
     
@@ -29,10 +29,10 @@ const Inicio = ({navigation}) =>{
 const SInicio = () => {
     return(
         <Stack.Navigator screenOptions={{ headerShown: true }}>
-            <Stack.Screen name="IInicio" component={Inicio} options={{ title:'Inicio' }}/>             
-            <Stack.Screen name="IAhorros" component={IAhorros} options={{ title:'Resumen de ahorros' }}/>             
-            <Stack.Screen name="IGastos" component={IGastos}  options={{ title:'Resumen de gastos' }}/>
-            <Stack.Screen name="IIngresos" component={IIngresos} options={{ title:'Resumen de ingresos' }}/>
+            <Stack.Screen name="Home" component={Inicio} options={{ title:'Inicio' }} screnName='Inicio'/>             
+            <Stack.Screen name="Saving" component={IAhorros} options={{ title:'Resumen de ahorros' }}/>             
+            <Stack.Screen name="Outcome" component={IGastos}  options={{ title:'Resumen de gastos' }}/>
+            <Stack.Screen name="Income" component={IIngresos} options={{ title:'Resumen de ingresos' }}/>
         </Stack.Navigator>
     )
 }

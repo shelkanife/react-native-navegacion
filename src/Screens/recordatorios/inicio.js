@@ -13,10 +13,10 @@ const ReInicio = ({navigation}) => {
             <Text>Pantalla "Recordatorios"</Text>
             
             <Button title='Detalle recordatorio'
-            onPress={() => navigation.navigate('ReDetalles')}></Button>
+            onPress={() => navigation.navigate('ReminderDetails')}></Button>
             
             <ActionButton buttonColor='#1E63CB'
-            onPress={() => navigation.navigate('ReRegistrar')}/>
+            onPress={() => navigation.navigate('RegisterReminder')}/>
         </View>
     )
 }
@@ -24,9 +24,9 @@ const ReInicio = ({navigation}) => {
 const SReInicio = () => {
     return(
         <Stack.Navigator screenOptions={{ headerShown: true }}>
-            <Stack.Screen name="ReInicio" component={ReInicio} options={{ title:'Recordatorios' }}/>
-            <Stack.Screen name="ReRegistrar" component={ReRegistrar} options={{ title:'Registrar Recordatorio' }}/>
-            <Stack.Screen name="ReDetalles" component={ReDetalles} options={{ title:'Detalle de Recordatorio' }}/>
+            <Stack.Screen name="Reminders" component={ReInicio} options={{ title:'Recordatorios' }}/>
+            <Stack.Screen name="RegisterReminder" component={ReRegistrar} options={{ title:'Registrar Recordatorio' }}/>
+            <Stack.Screen name="ReminderDetails" component={ReDetalles} options={{ title:'Detalle de Recordatorio' }}/>
         </Stack.Navigator>
     )
 }

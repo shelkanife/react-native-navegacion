@@ -1,6 +1,13 @@
 import {StyleSheet} from 'react-native'
 
 export const styles = StyleSheet.create({
+    loadingText:{
+        justifyContent:'center',
+        alignContent:'center'
+    },  
+    scrollContainer:{
+        flex:1
+    },
     container:{
         height:80,
         marginTop:16,

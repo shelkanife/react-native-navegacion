@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import SignNavegator from './SignScreens/SingIn';
+import SignNavegator from './src/Screens/Sign/SingIn';
 
 
 const App = () => {
