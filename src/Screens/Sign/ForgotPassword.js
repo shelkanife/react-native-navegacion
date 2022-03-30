@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView,Text,View,ImageBackground,TouchableOpacity} from 'react-native'
+import {Text,View,ImageBackground,TouchableOpacity} from 'react-native'
 import {Container,Content,Button, Title} from 'native-base'
 import FormGroup from '../../Components/FormGroup';
 import { styles } from './styles';
