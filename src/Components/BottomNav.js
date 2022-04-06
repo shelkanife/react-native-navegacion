@@ -19,9 +19,9 @@ const nombrePantallas={
 
 const Tab = createBottomTabNavigator()
 
-const Contenedor = () => {
+const BottomNav = () => {
     return(
-        <NavigationContainer independent={true} screenOptions={{}}>
+        <NavigationContainer independent={true}>
         <Tab.Navigator 
             initialRouteName={nombrePantallas.i}
             screenOptions={({ route }) => ({
@@ -68,4 +68,4 @@ const Contenedor = () => {
     )
 }
 
-export default Contenedor 
+export default BottomNav 

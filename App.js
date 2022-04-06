@@ -13,7 +13,7 @@ import SignNavegator from './src/Screens/Sign/SingIn';
 
 const App = () => {
   return(
-    <NavigationContainer screenOptions={{}}>
+    <NavigationContainer>
       <SignNavegator />
     </NavigationContainer>
   )

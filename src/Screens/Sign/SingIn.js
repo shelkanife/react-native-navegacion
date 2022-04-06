@@ -1,86 +1,100 @@
-import React from 'react';
-import {Text,ImageBackground} from 'react-native'
+import React, { useState, useEffect } from 'react';
+import { Text, ImageBackground } from 'react-native'
+import { Container, Content, View, Footer, Title, Button, Label, Item, Input } from 'native-base';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Contenedor from '../../Components/contenedor';
+import BottomNav from '../../Components/BottomNav';
 import ForgotPassword from './ForgotPassword';
 import SignUp from './SignUp';
-import FormGroup from '../../Components/FormGroup'
-import { styles } from './styles';
-import {Container,Content,Button,View,Footer, Title} from 'native-base';
+import { styles, itemStyles } from '../../Styles/styles';
+import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
+import { auth, user } from '../../Components/Auth'
 
 const Stack = createNativeStackNavigator()
 
+const SignIn = ({ navigation }) => {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const userEmail=auth.currentUser?.email
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+        if (user) {
+            navigation.replace("BottomNav")
+        }
+        })
+        return unsubscribe
+    },[])
 
-const SignIn = ({navigation}) => {
-    return(
+    const handleSignIn = function () {
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                alert('Sesion Iniciada')
+                navigation.navigate('BottomNav')
+            })
+            .catch((error) => {
+                alert(error)
+            })
+    }
+
+    return (
         <Container style={styles.mainContainer}>
             <Content>
                 <View style={styles.iconView}>
-                    <ImageBackground source={require('../../assets/logo.png')} style={{width:150,height:150}} />
+                    <ImageBackground source={require('../../assets/logo.png')} style={{ width: 150, height: 150 }} />
                 </View>
                 <View style={styles.form}>
                     <Title style={styles.title}>Iniciar Sesión</Title>
-                    <FormGroup nameField='Correo electrónico' placeholder='Ingresa correo electrónico' />
-                    <FormGroup nameField='Contraseña' placeholder='Contraseña' />
-                    <Button style={styles.btn}
-                        onPress={() => {navigation.navigate('Contenedor')}}>
-                        <Text style={{textTransform:'uppercase',fontSize:16,color:'#fff'}}>Iniciar sesión</Text>
+                    <Item floatingLabel style={{ marginBottom: 10, borderColor: '#1E63CB', borderBottomWidth: 2 }}>
+                        <Label style={itemStyles.label}>Correo electrónico</Label>
+                        <Input
+                            style={itemStyles.txtInput}
+                            onChangeText={(text) => setEmail(text)} />
+                    </Item>
+                    <Item floatingLabel style={{ marginBottom: 10, borderColor: '#1E63CB', borderBottomWidth: 2 }}>
+                        <Label style={itemStyles.label}>Contraseña</Label>
+                        <Input
+                            style={itemStyles.txtInput}
+                            onChangeText={(text) => setPassword(text)}
+                            secureTextEntry />
+                    </Item>
+                    <Button
+                        style={styles.btn}
+                        onPress={() => { handleSignIn() }}>
+                        <Text style={{ textTransform: 'uppercase', fontSize: 16, color: '#fff' }}>Iniciar sesión</Text>
                     </Button>
                     <View>
-                        <Button style={styles.forgot}  onPress={() => navigation.navigate('ForgotPassword')} transparent light>
-                            <Text style={{color:"#1E63CB"}}>¿Olvidaste la contraseña?</Text>
+                        <Button
+                            style={styles.forgot}
+                            onPress={() => navigation.navigate('ForgotPassword')}
+                            transparent light>
+                            <Text style={{ color: "#1E63CB" }}>¿Olvidaste la contraseña?</Text>
                         </Button>
                     </View>
                 </View>
             </Content>
-            <Footer style={{backgroundColor:"#fff",height:40}}>
+            <Footer style={{ backgroundColor: "#fff", height: 40 }}>
                 {/* <FooterTab> */}
-                    <Button light transparent onPress={() => navigation.navigate('SignUp')}>
-                        <Text style={{marginRight:16,}}>¿No tienes una cuenta?</Text>
-                        <Text style={{color:"#1E63CB"}}>Registrate</Text>
-                    </Button>
+                <Button
+                    light transparent
+                    onPress={() => navigation.navigate('SignUp')}>
+                    <Text style={{ marginRight: 16, }}>¿No tienes una cuenta?</Text>
+                    <Text style={{ color: "#1E63CB" }}>Registrate</Text>
+                </Button>
                 {/* </FooterTab> */}
             </Footer>
         </Container>
-        // <KeyboardAvoidingView style={styles.mainContainer}>
-        //     <ScrollView contentContainerStyle={{flex:1}}>
-        //         <View style={styles.iconView}>
-        //             <ImageBackground source={require('../assets/logo.png')} style={{width:150,height:150}} />
-        //             {/* <Ionicons style={styles.icon} name='logo-usd'/> */}
-        //         </View>
-        //         <View style={styles.form}>
-        //             <Text style={styles.title}>Iniciar Sesión</Text>
-        //             <FormGroup nameField='Correo electrónico' placeholder='Ingresa correo electrónico'/>
-        //             <FormGroup nameField='Contraseña' placeholder='Ingresa contraseña'/>
-        //             <TouchableOpacity 
-        //                 style={styles.btn}
-        //                 onPress={()=>navigation.navigate('Contenedor')}>
-        //                 <Text style={{color:'#ffffff'}}>INGRESAR</Text>
-        //             </TouchableOpacity>
-        //             <TouchableOpacity 
-        //                 style={styles.forgot}
-        //                 onPress={()=>navigation.navigate('ForgotPassword')}>
-        //                 <Text style={{color:'#1E63CB'}}>¿Olvidaste la contraseña?</Text>
-        //             </TouchableOpacity>
-        //         </View>
-        //         <TouchableOpacity 
-        //             style={styles.signUp}
-        //             onPress={()=>navigation.navigate('SignUp')}>
-        //             <Text style={{marginRight:16}}>¿No tienes una cuenta?</Text>
-        //             <Text style={{color:"#1E63CB"}}>Registrate</Text>
-        //         </TouchableOpacity>
-        //     </ScrollView>
-        // </KeyboardAvoidingView>
     )
+
 }
 
-const SignNavegator= () => {
-    return(
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="SignIn" component={SignIn} />             
+
+const SignNavegator = () => {
+    return (
+        <Stack.Navigator
+            screenOptions={{ headerShown: false }}>   
+            <Stack.Screen name="SignIn" component={SignIn} />
             <Stack.Screen name='ForgotPassword' component={ForgotPassword} />
             <Stack.Screen name='SignUp' component={SignUp} />
-            <Stack.Screen name='Contenedor' component={Contenedor}/>
+            <Stack.Screen name='BottomNav' component={BottomNav} /> 
         </Stack.Navigator>
     )
 }
