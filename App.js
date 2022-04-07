@@ -5,7 +5,7 @@ import SignNavigator from './src/screens/sign/SingIn';
 
 const App = () => {
   return (
-    <NavigationContainer screenOptions={{}}>
+    <NavigationContainer>
       <SignNavigator />
     </NavigationContainer>
   );

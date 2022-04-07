@@ -1,26 +1,43 @@
 import React from 'react';
-import {View, ScrollView, Image, StyleSheet, Dimensions} from 'react-native';
+import {
+  Text,
+  View,
+  ScrollView,
+  Image,
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
+import {useNavigation} from '@react-navigation/core';
+import {signOut} from 'firebase/auth';
 
+import {auth} from '../../components/Auth';
 import InfoCard from '../../components/InfoCard';
 
-import {container, colors} from '../../styles/global.styles';
+import {styles, colors} from '../../styles/global';
 
-const ScreenInicio = ({navigation}) => {
+const HomeScreen = () => {
+  const userEmail = auth.currentUser?.email;
+  const navigation = useNavigation();
+
   return (
-    <ScrollView contentContainerStyle={{...container}}>
-      <Image source={require('../../assets/pie.png')} style={styles.graph} />
+    <ScrollView contentContainerStyle={styles.screenContainer}>
+      <Text style={styles.subtitle}>¡Hola {userEmail}!</Text>
+      <Image
+        source={require('../../assets/pie.png')}
+        style={localStyles.graph}
+      />
       <View>
         <InfoCard
           title="Disponible"
           text="$12,345.67"
-          style={styles.card}
+          style={localStyles.card}
           icon={{name: 'home', color: 'white', backgroundColor: colors.main}}
         />
         <InfoCard
           onPress={() => navigation.navigate('Income')}
           title="Ingresos"
           text="$12,345.67"
-          style={styles.card}
+          style={localStyles.card}
           icon={{
             name: 'arrow-up',
             color: 'white',
@@ -31,7 +48,7 @@ const ScreenInicio = ({navigation}) => {
           onPress={() => navigation.navigate('Outcome')}
           title="Gastos"
           text="$12,345.67"
-          style={styles.card}
+          style={localStyles.card}
           icon={{
             name: 'arrow-down',
             color: 'white',
@@ -42,12 +59,23 @@ const ScreenInicio = ({navigation}) => {
           onPress={() => navigation.navigate('Saving')}
           title="Ahorros"
           text="$12,345.67"
-          style={styles.card}
+          style={localStyles.card}
           icon={{
             name: 'infinite',
             color: 'white',
             backgroundColor: colors.ahorros,
           }}
+        />
+        <InfoCard
+          onPress={() =>
+            signOut(auth)
+              .then(() => {
+                navigation.replace('SignIn');
+              })
+              .catch(error => console.log(error))
+          }
+          text="Cerrar sesión"
+          style={localStyles.card}
         />
       </View>
     </ScrollView>
@@ -56,7 +84,7 @@ const ScreenInicio = ({navigation}) => {
 
 const graphWidth = Dimensions.get('window').width * 0.7;
 
-const styles = StyleSheet.create({
+const localStyles = StyleSheet.create({
   graph: {
     width: graphWidth,
     height: graphWidth,
@@ -67,4 +95,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ScreenInicio;
+export default HomeScreen;

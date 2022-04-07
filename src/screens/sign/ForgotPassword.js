@@ -1,8 +1,7 @@
 import React from 'react';
 import {Text, View, ImageBackground, TouchableOpacity} from 'react-native';
 import {Container, Content, Button, Title} from 'native-base';
-import FormGroup from '../../components/FormGroup';
-import {styles} from './styles';
+import {styles} from '../../styles/global';
 
 const ForgotPassword = () => {
   return (
@@ -27,19 +26,12 @@ const ForgotPassword = () => {
             }}>
             Captura el correo electrónico con el que te has registrado
           </Text>
-          <FormGroup
-            nameField="Correo electrónico"
-            placeholder="Ingresa correo electrónico"
-          />
           <Button style={styles.btn}>
             <Text
               style={{textTransform: 'uppercase', fontSize: 16, color: '#fff'}}>
               Enviar correo
             </Text>
           </Button>
-          {/* <TouchableOpacity style={styles.btn}>
-                        <Text style={{color:"#ffffff",fontSize:16}}>Enviar correo</Text>
-                    </TouchableOpacity> */}
         </View>
       </Content>
     </Container>

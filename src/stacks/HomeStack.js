@@ -2,21 +2,21 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 // Screens
-import ScreenInicio from './ScreenInicio';
-import IAhorros from './resumenAhorros';
-import IGastos from './resumenGastos';
-import IIngresos from './resumenIngresos';
+import HomeScreen from '../screens/inicio/HomeScreen';
+import IAhorros from '../screens/inicio/resumenAhorros';
+import IGastos from '../screens/inicio/resumenGastos';
+import IIngresos from '../screens/inicio/resumenIngresos';
 
-import {getHeaderOptions} from '../../utils/header-utils';
+import {getHeaderOptions} from '../styles/global';
 
 const Stack = createNativeStackNavigator();
 
-const StackInicio = () => {
+const HomeStack = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: true}}>
       <Stack.Screen
         name="Home"
-        component={ScreenInicio}
+        component={HomeScreen}
         options={{
           ...getHeaderOptions(),
           title: 'Mis Finanzas',
@@ -42,4 +42,4 @@ const StackInicio = () => {
   );
 };
 
-export default StackInicio;
+export default HomeStack;

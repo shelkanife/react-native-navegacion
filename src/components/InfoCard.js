@@ -7,7 +7,9 @@ const InfoCard = ({icon = {}, title, text, onPress, style}) => {
   const {name, color, backgroundColor} = icon;
 
   return (
-    <Pressable onPress={onPress} style={[styles.card, styles.shadow, style]}>
+    <Pressable
+      onPress={onPress}
+      style={[localStyles.card, localStyles.shadow, style]}>
       {Object.keys(icon).length > 0 ? (
         <SquareIcon
           name={name}
@@ -15,15 +17,15 @@ const InfoCard = ({icon = {}, title, text, onPress, style}) => {
           backgroundColor={backgroundColor}
         />
       ) : null}
-      <View style={styles.info}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.text}>{text}</Text>
+      <View style={localStyles.info}>
+        <Text style={localStyles.title}>{title}</Text>
+        <Text style={localStyles.text}>{text}</Text>
       </View>
     </Pressable>
   );
 };
 
-const styles = StyleSheet.create({
+const localStyles = StyleSheet.create({
   card: {
     flexDirection: 'row',
     width: '100%',

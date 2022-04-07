@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native'
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     loadingText:{
         justifyContent:'center',
         alignContent:'center'
@@ -43,5 +43,40 @@ export const styles = StyleSheet.create({
     presupuestoName:{
         fontSize:16,
         fontWeight:"bold"
+    },
+    item:{
+        marginBottom: 10, 
+        borderColor: '#1E63CB', 
+        borderBottomWidth: 2 
+    },
+    textArea:{
+        borderColor:'#1E63CB',
+        borderWidth:2,
+        width:'100%',
+        height:150,
+        borderRadius:30,
+        padding:16
+    },
+    labelDate:{
+        textAlign:'center',
+        borderBottomColor:'#1E63CB',
+        borderBottomWidth:2
     }
 })
+const itemStyles=StyleSheet.create({
+    item:{
+        borderWidth:2
+    },
+    txtInput:{
+        fontSize:16,
+        paddingHorizontal:16,
+    },
+    label:{
+        fontSize:16
+    }
+})
+
+export  {
+    styles,
+    itemStyles
+}

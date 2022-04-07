@@ -4,7 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {NavigationContainer} from '@react-navigation/native';
 
 // Screens
-import SInicio from '../screens/inicio/StackInicio';
+import HomeStack from '../screens/inicio/HomeStack';
 import SMInicio from '../screens/movimientos/inicio';
 import SPInicio from '../screens/presupuestos/inicio';
 import SRInicio from '../screens/recomendaciones/inicio';
@@ -56,7 +56,7 @@ const Contenedor = () => {
           labelStyle: {paddingBottom: 10, fontSize: 10},
           style: {padding: 10, height: 70},
         })}>
-        <Tab.Screen name={nombrePantallas.i} component={SInicio} />
+        <Tab.Screen name={nombrePantallas.i} component={HomeStack} />
         <Tab.Screen name={nombrePantallas.m} component={SMInicio} />
         <Tab.Screen name={nombrePantallas.p} component={SPInicio} />
         <Tab.Screen name={nombrePantallas.r} component={SRInicio} />
