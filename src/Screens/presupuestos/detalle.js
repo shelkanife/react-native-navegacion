@@ -1,6 +1,6 @@
 import React from 'react'
-import {View,Text} from 'react-native'
-import {Container,Textarea,Content,Input,Label,Item,Header,Body,Right,Left,Title,Button,Icon} from 'native-base'
+import {View,Text,Alert} from 'react-native'
+import {Container,Textarea,Content,Input,Label,Item,Header,Body,Right,Left,Title,Button,Icon, Footer} from 'native-base'
 import { styles,itemStyles } from '../../Styles/styles'
 import {toDate} from 'firebase/firestore/lite'
 
@@ -69,6 +69,19 @@ const PDetalle = ({navigation,route}) => {
                     style={styles.textArea}
                 />
             </Item>
+                <Button
+                    rounded
+                    style={{width:'80%',alignSelf:'center',justifyContent:'center',backgroundColor:'red'}}
+                    onPress={() => Alert.alert(
+                        'Eliminar',
+                        '¿Seguro que deseas eliminarlo?',
+                        [
+                            {text:'Sí',onPress:() => Alert.alert('Eliminado')},
+                            {text:'No',onPress:null}
+                        ]
+                        )}>
+                    <Text style={{color:'white',fontSize:20}}>Eliminar</Text>
+                </Button>
         </Content>
     </Container>
     )

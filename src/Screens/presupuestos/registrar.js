@@ -40,7 +40,7 @@ const PRegistrar = ({navigation,route}) => {
                     "description":description.toString()
                 });
                 alert('Presupuesto creado')
-                navigation.replace("Budget")
+                navigation.navigate("Budget")
             }catch(error){
                 alert(error)
             }

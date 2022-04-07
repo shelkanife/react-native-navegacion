@@ -12,27 +12,26 @@ import { auth, user } from '../../Components/Auth'
 const Stack = createNativeStackNavigator()
 
 const SignIn = ({ navigation }) => {
+    
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const userEmail=auth.currentUser?.email
+
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
-        if (user) {
-            navigation.replace("BottomNav")
-        }
+        if (user) navigation.replace("BottomNav")
         })
         return unsubscribe
     },[])
 
     const handleSignIn = function () {
         signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                alert('Sesion Iniciada')
-                navigation.navigate('BottomNav')
-            })
-            .catch((error) => {
-                alert(error)
-            })
+        .then((userCredential) => {
+            navigation.replace('BottomNav')
+        })
+        .catch((error) => {
+            alert(error)
+        })
     }
 
     return (

@@ -28,12 +28,12 @@ const PInicio = ({navigation}) => {
         getBudgetsList()
     }, [])
     return(
-        <View style={budgets.length === 0? {flex:1,alignItems:'center',justifyContent:'center'}: {flex:1}}>
-            {budgets.length === 0
-            ? <Text style={{fontSize:20,fontWeight:'bold'}}>Aún sin Presupuestos</Text>
-            :<ScrollView>
+        <View style={{flex:1}}>
+            <ScrollView contentContainerStyle={budgets.length === 0? {flexGrow:1,alignItems:'center',justifyContent:'center'}:{}}>
             {
-                budgets.map(budget => {
+                budgets.length === 0
+                ? <Text style={{fontSize:20,fontWeight:'bold'}}>Aún sin presupuestos</Text>
+                :budgets.map(budget => {
                     return (
                         <Budget
                             key={budget.id}
@@ -45,7 +45,7 @@ const PInicio = ({navigation}) => {
                 })
             }
             </ScrollView>
-            }
+
             <ActionButton 
                 buttonColor='#1E63CB'
                 onPress={() => navigation.navigate('RegisterBudget')} />

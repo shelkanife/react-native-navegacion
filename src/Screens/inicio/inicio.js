@@ -48,7 +48,6 @@ const SInicio = () => {
             <Stack.Screen name="Saving" component={IAhorros} options={{ title:'Resumen de ahorros' }}/>             
             <Stack.Screen name="Outcome" component={IGastos}  options={{ title:'Resumen de gastos' }}/>
             <Stack.Screen name="Income" component={IIngresos} options={{ title:'Resumen de ingresos' }}/>
-            <Stack.Screen name='SignIn' component={SignIn} />
         </Stack.Navigator>
     )
 }
