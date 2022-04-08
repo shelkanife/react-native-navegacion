@@ -1,22 +1,14 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import SignNavegator from './src/Screens/Sign/SingIn';
+import {NavigationContainer} from '@react-navigation/native';
 
+import SignNavigator from './src/screens/sign/SingIn';
 
 const App = () => {
-  return(
+  return (
     <NavigationContainer>
-      <SignNavegator />
+      <SignNavigator />
     </NavigationContainer>
-  )
-}
+  );
+};
 
 export default App;
