@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {StyleSheet,Pressable} from 'react-native';
 import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
 import {
   Text,
@@ -23,11 +24,12 @@ import {db, auth} from '../../components/Auth';
 import {async} from '@firebase/util';
 
 const PRegistrar = ({navigation, route}) => {
-  const [concept, setConcept] = useState('');
-  const [amount, setAmount] = useState('');
-  const [description, setDescription] = useState('');
-  const [date, setDate] = useState(new Date());
-  const [isSavable, setSave] = useState(false);
+  const budget = route.params?.budget
+  const [concept, setConcept] = useState(budget?budget.concept:'');
+  const [amount, setAmount] = useState(budget?budget.amount.toString():'');
+  const [description, setDescription] = useState(budget?budget.description:'');
+  const [date, setDate] = useState(budget? new Date(Date.parse(budget.date)):new Date());
+  const [isSavable, setSave] = useState(budget? (budget.concept && budget.amount):false);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -70,39 +72,58 @@ const PRegistrar = ({navigation, route}) => {
           </Button>
         </Left>
         <Body>
-          <Title style={{fontSize: 20}}>Crear presupuesto</Title>
+          <Title style={{fontSize: 20}}>
+            {budget? "Editar presupuesto":"Crear presupuesto"}
+          </Title>
         </Body>
-        <Right>
-          <Button
+        {/* <Right
+          style={{borderWidth:1,borderColor:'black', flexWrap:'wrap'}}> */}
+          {/* <Button
             transparent
+            style={{borderWidth:1,borderColor:'black'}}
             disabled={isSavable ? false : true}
             onPress={addNewBudget}>
-            <Text style={{fontSize: 20}}>crear</Text>
-          </Button>
-        </Right>
+            <Text style={{fontSize: 20,textAlign:'center'}}>
+              {budget? "Guardar":"Crear"}
+            </Text>
+          </Button> */}
+          <Pressable 
+            style={{justifyContent:'center'}}
+            onPress={addNewBudget}>
+                <Text 
+                  style={{
+                  fontSize:18,
+                  color:'white'}}>
+                    {budget? 'Guardar':'Crear'}
+                </Text>
+          </Pressable>
+        {/* </Right> */}
       </Header>
       <Content style={{padding: 16}}>
-        <Item floatingLabel style={styles.item}>
-          <Label style={itemStyles.label} l>
-            Concepto
-          </Label>
-          <Input
-            style={itemStyles.txtInput}
+        <Item style={localeStyles.item}>
+          <Label
+            style={{
+              ...itemStyles.label,
+              color: '#1E63CB'
+            }}>Concepto</Label>
+          <Input 
+            style={localeStyles.input}
+            defaultValue={budget?budget.concept:""}
             onChangeText={concept => {
-              setConcept(concept);
-              setSave(concept != '' && amount != '');
-            }}
-          />
+              setAmount(concept);
+              setSave(concept && amount);
+            }} />
         </Item>
         <View style={{flexDirection: 'row'}}>
           <View style={{width: '50%'}}>
-            <Item floatingLabel style={styles.item}>
-              <Label style={itemStyles.label}>Cantidad</Label>
+            <Item style={{...styles.item,...localeStyles.item}}>
+              <Label style={{...itemStyles.label,color:'#1E63CB'}}>Cantidad</Label>
               <Input
-                style={{...itemStyles.txtInput, textAlign: 'center'}}
+                style={{...localeStyles.input,textAlign:'center'}}
+                defaultValue={budget?budget.amount.toString():""}
                 onChangeText={amount => {
                   setAmount(amount);
-                  setSave(concept !== '' && amount != '');
+                  setSave(concept && amount);
                 }}
                 keyboardType="numeric"
               />
@@ -112,17 +133,18 @@ const PRegistrar = ({navigation, route}) => {
             style={{
               width: '50%',
               alignItems: 'center',
-              justifyContent: 'center',
+              justifyContent: 'center'
             }}>
-            <Label style={{fontSize: 20, fontWeight: 'bold'}}>M.N.</Label>
+            <Label style={{fontSize: 23, fontWeight: 'bold'}}>M.N.</Label>
           </View>
         </View>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row',alignItems:'center'}}>
           <View style={{width: '50%'}}>
-            <Label style={itemStyles.label}>Fecha</Label>
-            <Label style={styles.labelDate}>
-              {date.toLocaleDateString('es-MX')}
-            </Label>
+            <Label style={{...itemStyles.label,color:"#1E63CB"}}>Fecha</Label>
+            <Input 
+              disabled 
+              style={{...styles.item,...localeStyles.item,textAlign:'center',borderWidth:1,borderColor:'white',borderBottomColor:'#1E63CB'}} 
+              value={date.toLocaleDateString('es-MX')}/>
           </View>
           <View style={{width: '50%'}}>
             <Button
@@ -133,12 +155,13 @@ const PRegistrar = ({navigation, route}) => {
           </View>
         </View>
         <Item style={{marginTop: 16, borderBottomWidth: 0}}>
-          <Label style={itemStyles.label}>Descripción</Label>
+          <Label style={{...itemStyles.label,color:"#1E63CB"}}>Descripción</Label>
         </Item>
         <Item>
           <Textarea
             placeholder="Opcional"
             style={styles.textArea}
+            defaultValue={budget?budget.description:""}
             onChangeText={description => setDescription(description)}
           />
         </Item>
@@ -147,4 +170,17 @@ const PRegistrar = ({navigation, route}) => {
   );
 };
 
+const localeStyles = StyleSheet.create({
+  item:{
+    flexDirection:'column',
+    alignItems:'flex-start'
+  },
+  input:{
+    width:'100%',
+    borderWidth:1,
+    borderColor:'white',
+    borderBottomColor:'#1E63CB',
+    fontSize:20
+  }
+})
 export default PRegistrar;

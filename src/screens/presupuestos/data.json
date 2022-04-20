@@ -1,0 +1,52 @@
+{
+    "budgets":[
+        {
+            "id":1,
+            "amount":1,
+            "concept":"Budget 1",
+            "date":"Thu Apr 14 2022 21:10:23 GMT-0500 (Central Daylight Time",
+            "description":"Description 1",
+            "uid":"usr1"
+        },
+        {
+            "id":2,
+            "amount":2,
+            "concept":"Budget 2",
+            "date":"Thu Apr 14 2022 21:10:23 GMT-0500 (Central Daylight Time",
+            "description":"Description 2",
+            "uid":"usr2"
+        },
+        {   
+            "id":3,
+            "amount":3,
+            "concept":"Budget 3",
+            "date":"Thu Apr 14 2022 21:10:23 GMT-0500 (Central Daylight Time",
+            "description":"Description 3",
+            "uid":"usr3"
+        },
+        {
+            "id":4,
+            "amount":4,
+            "concept":"Budget 4",
+            "date":"Thu Apr 14 2022 21:10:23 GMT-0500 (Central Daylight Time",
+            "description":"Description 4",
+            "uid":"usr4"
+        },
+        {
+            "id":5,
+            "amount":5,
+            "concept":"Budget 5",
+            "date":"Thu Apr 14 2022 21:10:23 GMT-0500 (Central Daylight Time",
+            "description":"Description 5",
+            "uid":"usr5"
+        },
+        {
+            "id":6,
+            "amount":6,
+            "concept":"Budget 6",
+            "date":"Thu Apr 14 2022 21:10:23 GMT-0500 (Central Daylight Time",
+            "description":"Description 6",
+            "uid":"usr6"
+        }
+    ]
+}

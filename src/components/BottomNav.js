@@ -48,6 +48,7 @@ const BottomNav = () => {
 
           return <Ionicons name={icono} size={size} color={color} />;
         },
+        tabBarHideOnKeyboard:true,
         headerShown: false,
         activeTintColor: '#1E63CB',
         inactiveTintColor: 'grey',

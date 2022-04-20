@@ -1,33 +1,36 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, ScrollView, Pressable} from 'react-native';
+import {View, Text, ScrollView, Pressable,StyleSheet} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ActionButton from 'react-native-action-button';
 import {db, auth} from '../../components/Auth';
 import {collection, getDocs, query, where} from 'firebase/firestore/lite';
 import Budget from '../../components/Budget';
 import {toDate} from 'firebase/firestore/lite';
+
 import PDetalle from './detalle';
 import PRegistrar from './registrar';
+const data = require('./data.json')
 
 const Stack = createNativeStackNavigator();
 
 const PInicio = ({navigation}) => {
   const [budgets, setBudgets] = useState([]);
   const getBudgetsList = async function () {
-    try {
-      const budgetsCol = collection(db, 'budgets');
-      const queryResult = query(
-        budgetsCol,
-        where('uid', '==', auth.currentUser.uid),
-      );
-      const budgetsSnapshot = await getDocs(queryResult);
-      const budgetsList = budgetsSnapshot.docs.map(doc => {
-        return {...doc.data(), id: doc.id};
-      });
-      setBudgets(budgetsList);
-    } catch (error) {
-      alert(error);
-    }
+    setBudgets(data.budgets)
+    // try {
+    //   const budgetsCol = collection(db, 'budgets');
+    //   const queryResult = query(
+    //     budgetsCol,
+    //     where('uid', '==', auth.currentUser.uid),
+    //   );
+    //   const budgetsSnapshot = await getDocs(queryResult);
+    //   const budgetsList = budgetsSnapshot.docs.map(doc => {
+    //     return {...doc.data(), id: doc.id};
+    //   });
+    //   setBudgets(budgetsList);
+    // } catch (error) {
+    //   alert(error);
+    // }
   };
   useEffect(() => {
     getBudgetsList();
@@ -37,7 +40,7 @@ const PInicio = ({navigation}) => {
       <ScrollView
         contentContainerStyle={
           budgets.length === 0
-            ? {flexGrow: 1, alignItems: 'center', justifyContent: 'center'}
+            ? localeStyles.mainContainer
             : {}
         }>
         {budgets.length === 0 ? (
@@ -49,7 +52,10 @@ const PInicio = ({navigation}) => {
             return (
               <Budget
                 key={budget.id}
-                date={budget.date.toDate().toLocaleDateString('es-MX')}
+                date={
+                  new Date(Date.parse(budget.date)).toLocaleDateString('es-MX')
+                  //budget.date.toDate().toLocaleDateString('es-MX')
+                }
                 concept={budget.concept}
                 navigation={navigation}
                 budgetData={budget}
@@ -100,5 +106,13 @@ const SPInicio = () => {
     </Stack.Navigator>
   );
 };
+
+const localeStyles=StyleSheet.create({
+  mainContainer:{
+    flexGrow: 1, 
+    alignItems: 'center', 
+    justifyContent: 'center'
+  }
+})
 
 export default SPInicio;

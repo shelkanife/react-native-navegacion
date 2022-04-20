@@ -15,99 +15,99 @@ import {
   Button,
   Icon,
   Footer,
+  Card,
+  CardItem,
+  
 } from 'native-base';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {styles, itemStyles} from '../../styles/global';
 import {toDate} from 'firebase/firestore/lite';
 
-const PDetalle = ({navigation, route}) => {
-  const {budget} = route.params;
-  return (
-    <Container style={styles.mainContainer}>
-      <Header style={{backgroundColor: '#1E63CB'}}>
-        <Left>
-          <Button transparent onPress={() => navigation.navigate('Budget')}>
-            <Icon name="arrow-back"></Icon>
-          </Button>
-        </Left>
-        <Body>
-          <Title style={{fontSize: 20}}>Detalles</Title>
-        </Body>
-      </Header>
-      <Content style={{padding: 16}}>
-        <Item floatingLabel style={styles.item}>
-          <Label style={itemStyles.label} l>
-            Concepto
-          </Label>
-          <Input disabled style={itemStyles.txtInput} value={budget.concept} />
-        </Item>
-        <View style={{flexDirection: 'row'}}>
-          <View style={{width: '50%'}}>
-            <Item floatingLabel style={styles.item}>
-              <Label style={itemStyles.label}>Cantidad</Label>
-              <Input
-                disabled
-                style={{...itemStyles.txtInput, textAlign: 'center'}}
-                value={budget.amount}
-                keyboardType="numeric"
-              />
-            </Item>
-          </View>
-          <View
-            style={{
-              width: '50%',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Label style={{fontSize: 20, fontWeight: 'bold'}}>M.N.</Label>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row'}}>
-          <View style={{width: '50%'}}>
-            <Label style={itemStyles.label}>Fecha</Label>
-            <Label style={{...styles.labelDate, textAlign: 'center'}}>
-              {budget.date.toDate().toLocaleDateString('es-MX')}
-            </Label>
-          </View>
-          <View style={{width: '50%'}}>
-            <Button style={{backgroundColor: '#1E63CB', alignSelf: 'center'}}>
-              <Icon name="calendar"></Icon>
-            </Button>
-          </View>
-        </View>
-        <Item style={{marginTop: 16, borderBottomWidth: 0}}>
-          <Label style={itemStyles.label}>Descripción</Label>
-        </Item>
-        <Item>
-          <Textarea
-            disabled
-            value={
-              budget.description == ''
-                ? 'No se especifico una descripción'
-                : budget.concept
-            }
-            placeholder="Opcional"
-            style={styles.textArea}
-          />
-        </Item>
-        <Button
-          rounded
-          style={{
-            width: '80%',
-            alignSelf: 'center',
-            justifyContent: 'center',
-            backgroundColor: 'red',
-          }}
-          onPress={() =>
-            Alert.alert('Eliminar', '¿Seguro que deseas eliminarlo?', [
-              {text: 'Sí', onPress: () => Alert.alert('Eliminado')},
-              {text: 'No', onPress: null},
-            ])
-          }>
-          <Text style={{color: 'white', fontSize: 20}}>Eliminar</Text>
-        </Button>
-      </Content>
-    </Container>
-  );
-};
 
+const PDetalle = ({navigation,route}) => {
+  const {budget}=route.params
+  const deleteBudget = async() => {
+      // try{
+      //     const targetBudget = doc(db,'budgets',budget.id)
+      //     await deleteDoc(targetBudget)
+      //     .then(() => navigation.navigate('Budget'))
+      // }catch(error){
+      //     alert(error)
+      // }
+      
+  }
+  return(
+      <Container style={styles.mainContainer}>
+      <Header style={{backgroundColor:'#1E63CB'}}>
+          <Left>
+              <Button transparent
+              onPress={() => navigation.navigate('Budget')}>
+                  <Ionicons 
+                      style={{color:'white',fontSize:25}} 
+                      name='arrow-back' />
+              </Button>
+          </Left>
+          <Body>
+              <Title style={{fontSize:20}}>Detalles</Title>
+          </Body>
+          <Right>
+              <Button 
+                  transparent
+                  onPress={() => Alert.alert(
+                      'Eliminar',
+                      '¿Seguro que deseas eliminarlo?',
+                      [
+                          {text:'Sí',onPress:deleteBudget},
+                          {text:'No',onPress:null}
+                      ]
+                      )}>
+                  <Ionicons 
+                      style={{color:'white',fontSize:23}}
+                      name='trash' />
+              </Button>
+          </Right>
+      </Header>
+      <Content style={{padding:16}}>
+          <Card>
+              <CardItem header bordered>
+                  <Left>
+                      <Text style={{fontSize:20}}>
+                          {budget.concept}
+                      </Text>
+                  </Left>
+                  <Right>
+                      <Text style={{fontWeight:'bold',fontSize:20}}>
+                          <Ionicons style={{fontSize:20}} name='logo-usd'></Ionicons>
+                          {budget.amount}
+                      </Text>
+                  </Right>
+              </CardItem>
+              <CardItem bordered>
+                  <Ionicons name='calendar'style={{color:'gray',fontSize:20}}></Ionicons>
+                  <Text style={{fontSize:20, marginLeft:16}}>
+                      {/* {budget.date.toDate().toLocaleDateString('es-MX')} */}
+                      {new Date(Date.parse(budget.date)).toLocaleDateString('es-MX')}
+                  </Text>
+              </CardItem>
+              <CardItem bordered>
+                  <Ionicons name='newspaper'style={{color:'gray',fontSize:20,}}></Ionicons>
+                  <Text style={{fontSize:20, marginLeft:16}}>
+                      {
+                      budget.description == ''
+                      ? "Sin descripción"
+                      : budget.description
+                      }
+                  </Text>
+              </CardItem>
+          </Card>
+          <Button block style={{marginTop:16,borderRadius:16,backgroundColor:"#1E63CB"}}
+              onPress={() => navigation.navigate("RegisterBudget",{budget:budget})}>
+              <Ionicons name='pencil' style={{fontSize:20,color:'white'}}></Ionicons>
+              <Text style={{color:'white',marginLeft:16,fontSize:20}}>Editar</Text>
+          </Button>
+      </Content>
+      </Container>
+    )
+  }
+  
 export default PDetalle;
