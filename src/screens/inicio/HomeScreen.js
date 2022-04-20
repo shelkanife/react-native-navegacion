@@ -30,14 +30,12 @@ const HomeScreen = () => {
         <InfoCard
           title="Disponible"
           text="$12,345.67"
-          style={localStyles.card}
           icon={{name: 'home', color: 'white', backgroundColor: colors.main}}
         />
         <InfoCard
           onPress={() => navigation.navigate('Income')}
           title="Ingresos"
           text="$12,345.67"
-          style={localStyles.card}
           icon={{
             name: 'arrow-up',
             color: 'white',
@@ -48,7 +46,6 @@ const HomeScreen = () => {
           onPress={() => navigation.navigate('Outcome')}
           title="Gastos"
           text="$12,345.67"
-          style={localStyles.card}
           icon={{
             name: 'arrow-down',
             color: 'white',
@@ -59,7 +56,6 @@ const HomeScreen = () => {
           onPress={() => navigation.navigate('Saving')}
           title="Ahorros"
           text="$12,345.67"
-          style={localStyles.card}
           icon={{
             name: 'infinite',
             color: 'white',
@@ -75,7 +71,6 @@ const HomeScreen = () => {
               .catch(error => console.log(error))
           }
           text="Cerrar sesión"
-          style={localStyles.card}
         />
       </View>
     </ScrollView>
@@ -89,9 +84,6 @@ const localStyles = StyleSheet.create({
     width: graphWidth,
     height: graphWidth,
     marginBottom: 20,
-  },
-  card: {
-    marginBottom: 30,
   },
 });
 

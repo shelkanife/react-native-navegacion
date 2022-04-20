@@ -3,11 +3,9 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 // Screens
 import HomeScreen from '../screens/inicio/HomeScreen';
-import IAhorros from '../screens/inicio/resumenAhorros';
-import IGastos from '../screens/inicio/resumenGastos';
-import IIngresos from '../screens/inicio/resumenIngresos';
+import SummaryScreen from '../screens/inicio/SummaryScreen';
 
-import {getHeaderOptions} from '../styles/global';
+import {colors, getHeaderOptions} from '../styles/global';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,20 +22,29 @@ const HomeStack = () => {
         screnName="Inicio"
       />
       <Stack.Screen
-        name="Saving"
-        component={IAhorros}
-        options={{title: 'Resumen de ahorros'}}
-      />
+        name="Income"
+        options={{
+          ...getHeaderOptions(colors.ingresos),
+          title: 'Ingresos',
+        }}>
+        {() => <SummaryScreen type="ingresos" />}
+      </Stack.Screen>
       <Stack.Screen
         name="Outcome"
-        component={IGastos}
-        options={{title: 'Resumen de gastos'}}
-      />
+        options={{
+          ...getHeaderOptions(colors.gastos),
+          title: 'Gastos',
+        }}>
+        {() => <SummaryScreen type="gastos" />}
+      </Stack.Screen>
       <Stack.Screen
-        name="Income"
-        component={IIngresos}
-        options={{title: 'Resumen de ingresos'}}
-      />
+        name="Saving"
+        options={{
+          ...getHeaderOptions(colors.ahorros),
+          title: 'Ahorros',
+        }}>
+        {() => <SummaryScreen type="ahorros" />}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 };

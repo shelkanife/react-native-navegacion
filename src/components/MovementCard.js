@@ -3,7 +3,17 @@ import {Text, StyleSheet, Dimensions, Pressable, View} from 'react-native';
 
 import SquareIcon from './SquareIcon';
 
-const InfoCard = ({icon = {}, title, text, onPress, style}) => {
+import {icons} from '../utils/icons';
+
+const MovementCard = ({
+  type = 'default',
+  description,
+  category,
+  amount = 0.0,
+  onPress,
+  style,
+}) => {
+  const icon = icons[type].icon || icons['default'].icon;
   const {name, color, backgroundColor} = icon;
 
   return (
@@ -18,9 +28,12 @@ const InfoCard = ({icon = {}, title, text, onPress, style}) => {
         />
       ) : null}
       <View style={localStyles.info}>
-        <Text style={localStyles.title}>{title}</Text>
-        <Text style={localStyles.text}>{text}</Text>
+        <Text style={localStyles.description}>{description}</Text>
+        <Text style={localStyles.category}>{category}</Text>
       </View>
+      <Text style={[localStyles.category, {color: backgroundColor}]}>
+        {'$' + Number.parseFloat(amount).toFixed(2)}
+      </Text>
     </Pressable>
   );
 };
@@ -31,24 +44,31 @@ const localStyles = StyleSheet.create({
     width: '100%',
     height: Dimensions.get('window').width * 0.17,
     backgroundColor: 'white',
-    marginBottom: 30,
+    marginBottom: 15,
+    paddingRight: 12,
+    alignItems: 'center',
   },
   shadow: {
-    elevation: 7,
+    elevation: 0,
   },
   info: {
     flex: 4,
     alignItems: 'center',
     justifyContent: 'space-evenly',
+    height: '100%',
   },
-  title: {
+  description: {
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: 18,
     margin: -6,
   },
-  text: {
-    fontSize: 26,
+  category: {
+    fontSize: 14,
+  },
+  amount: {
+    flex: 2,
+    fontSize: 14,
   },
 });
 
-export default InfoCard;
+export default MovementCard;
