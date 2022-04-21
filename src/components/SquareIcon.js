@@ -4,7 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const SquareIcon = ({name, color, backgroundColor}) => (
   <View style={[localStyles.container, {backgroundColor}]}>
-    <Ionicons name={name} size={999} adjustsFontSizeToFit color={color} />
+    <Ionicons name={name} size={9999} adjustsFontSizeToFit color={color} />
   </View>
 );
 
