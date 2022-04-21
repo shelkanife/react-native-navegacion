@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
         height:80,
         marginTop:16,
         borderBottomColor:"#737373",
-        borderBottomWidth:1
+        borderBottomWidth:1,
+        elevation:7
     },
     date:{
         backgroundColor:"#1E63CB",
@@ -46,12 +47,12 @@ const styles = StyleSheet.create({
     },
     item:{
         marginBottom: 10, 
-        borderColor: '#1E63CB', 
-        borderBottomWidth: 2 
+        // borderColor: '#1E63CB', 
+        // borderBottomWidth: 2 
     },
     textArea:{
         borderColor:'#1E63CB',
-        borderWidth:2,
+        borderWidth:1,
         width:'100%',
         height:150,
         borderRadius:30,

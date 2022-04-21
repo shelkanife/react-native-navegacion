@@ -1,0 +1,43 @@
+{
+    "categories":[
+        {"name":"Comida","value":"c"},
+        {"name":"Ropa","value":"r"},
+        {"name":"Colegiatura","value":"co"},
+        {"name":"Renta","value":"r"},
+        {"name":"Entretenimiento","value":"e"}
+    ],
+    "movements":[
+        {
+            "id":1,
+            "incomming":false,
+            "concept":"Concepto 1",
+            "date":"12/05/2022",
+            "category":"Comida",
+            "amount":123.48
+        },
+        {
+            "id":2,
+            "incomming":true,
+            "concept":"Concepto 2",
+            "date":"12/05/2022",
+            "category":"Asp",
+            "amount":123.48
+        },
+        {
+            "id":3,
+            "incomming":false,
+            "concept":"Concepto 3",
+            "date":"12/05/2022",
+            "category":"Colegiatura",
+            "amount":123.48
+        },
+        {
+            "id":4,
+            "incomming":true,
+            "concept":"Concepto 4",
+            "date":"12/05/2022",
+            "category":"Ropa",
+            "amount":123.48
+        }
+    ]
+}
