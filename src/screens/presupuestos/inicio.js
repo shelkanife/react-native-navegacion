@@ -6,17 +6,27 @@ import {db, auth} from '../../components/Auth';
 import {collection, getDocs, query, where} from 'firebase/firestore/lite';
 import Budget from '../../components/Budget';
 import {toDate} from 'firebase/firestore/lite';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 import PDetalle from './detalle';
 import PRegistrar from './registrar';
-const data = require('./data.json')
+// const data = require('./data.json')
 
 const Stack = createNativeStackNavigator();
 
 const PInicio = ({navigation}) => {
   const [budgets, setBudgets] = useState([]);
-  const getBudgetsList = async function () {
-    setBudgets(data.budgets)
+  const isFocused = useIsFocused()
+
+  const getBudgets = async function () {
+    try{
+      const strBudgets = await AsyncStorage.getItem('budgets')
+      if(strBudgets !== null){
+        const arrayBudgets = JSON.parse(strBudgets)
+        console.log(arrayBudgets.length)
+        setBudgets([...arrayBudgets])
+      }
+    }catch(e){alert(e)}
     // try {
     //   const budgetsCol = collection(db, 'budgets');
     //   const queryResult = query(
@@ -33,8 +43,8 @@ const PInicio = ({navigation}) => {
     // }
   };
   useEffect(() => {
-    getBudgetsList();
-  }, []);
+    getBudgets();
+  }, [isFocused]);
   return (
     <View style={{flex: 1}}>
       <ScrollView

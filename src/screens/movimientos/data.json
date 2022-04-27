@@ -1,10 +1,10 @@
 {
     "categories":[
-        {"name":"Comida","value":"c"},
-        {"name":"Ropa","value":"r"},
-        {"name":"Colegiatura","value":"co"},
-        {"name":"Renta","value":"r"},
-        {"name":"Entretenimiento","value":"e"}
+        {"name":"Comida","value":"Comida"},
+        {"name":"Ropa","value":"Ropa"},
+        {"name":"Colegiatura","value":"Colegiatura"},
+        {"name":"Renta","value":"Renta"},
+        {"name":"Entretenimiento","value":"Entretenimiento"}
     ],
     "movements":[
         {

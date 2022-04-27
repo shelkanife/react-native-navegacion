@@ -22,6 +22,7 @@ import {styles, itemStyles} from './styles';
 import {collection, addDoc, Timestamp} from 'firebase/firestore/lite';
 import {db, auth} from '../../components/Auth';
 import {async} from '@firebase/util';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PRegistrar = ({navigation, route}) => {
   const budget = route.params?.budget
@@ -46,23 +47,54 @@ const PRegistrar = ({navigation, route}) => {
   const showDatepicker = () => {
     showMode('date');
   };
-  const addNewBudget = async () => {
-    if (isSavable) {
-      try {
-        const docRef = await addDoc(collection(db, 'budgets'), {
-          uid: auth.currentUser.uid,
-          concept: concept.toString(),
-          date: Timestamp.fromDate(date),
-          amount: amount.toString(),
-          description: description.toString(),
-        });
-        alert('Presupuesto creado');
-        navigation.navigate('Budget');
-      } catch (error) {
-        alert(error);
-      }
+
+  const save = async (budgets) =>{
+    budgets=JSON.parse(budgets)
+        const budget = {
+            "id":budgets.length + 1,
+            concept,
+            amount,
+            date,
+            description
+        }
+        budgets.push(budget)
+        try{
+            budgets=JSON.stringify(budgets)
+            await AsyncStorage.setItem('budgets',budgets)
+            navigation.goBack()
+        }catch(e){}
+  }
+
+  const saveBudget = async () => {
+    const budgets = await AsyncStorage.getItem('budgets')
+    if(budgets !== null){
+        save(budgets)
+    }else{
+        try{
+            await AsyncStorage.setItem('budgets','[]')
+            const budgets = await AsyncStorage.getItem('budgets')
+            save(budgets)
+        }catch(e){alert(e)}
     }
-  };
+}
+
+  // const addNewBudget = async () => {
+  //   if (isSavable) {
+  //     // try {
+  //     //   const docRef = await addDoc(collection(db, 'budgets'), {
+  //     //     uid: auth.currentUser.uid,
+  //     //     concept: concept.toString(),
+  //     //     date: Timestamp.fromDate(date),
+  //     //     amount: amount.toString(),
+  //     //     description: description.toString(),
+  //     //   });
+  //     //   alert('Presupuesto creado');
+  //     //   navigation.navigate('Budget');
+  //     // } catch (error) {
+  //     //   alert(error);
+  //     // }
+  //   }
+  // };
   return (
     <Container style={styles.mainContainer}>
       <Header style={{backgroundColor: '#1E63CB'}}>
@@ -76,54 +108,37 @@ const PRegistrar = ({navigation, route}) => {
             {budget? "Editar presupuesto":"Crear presupuesto"}
           </Title>
         </Body>
-        {/* <Right
-          style={{borderWidth:1,borderColor:'black', flexWrap:'wrap'}}> */}
-          {/* <Button
-            transparent
-            style={{borderWidth:1,borderColor:'black'}}
-            disabled={isSavable ? false : true}
-            onPress={addNewBudget}>
-            <Text style={{fontSize: 20,textAlign:'center'}}>
-              {budget? "Guardar":"Crear"}
-            </Text>
-          </Button> */}
-          <Pressable 
-            style={{justifyContent:'center'}}
-            onPress={addNewBudget}>
-                <Text 
-                  style={{
-                  fontSize:18,
-                  color:'white'}}>
-                    {budget? 'Guardar':'Crear'}
-                </Text>
-          </Pressable>
-        {/* </Right> */}
+        <Pressable 
+          disabled={!isSavable}
+          style={{justifyContent:'center'}}
+          onPress={saveBudget}>
+              <Text style={{fontSize:18,color:isSavable?'white':'grey'}}>
+                  {budget? 'Guardar':'Crear'}
+              </Text>
+        </Pressable>
       </Header>
       <Content style={{padding: 16}}>
         <Item style={localeStyles.item}>
           <Label
-            style={{
-              ...itemStyles.label,
-              color: '#1E63CB'
-            }}>Concepto</Label>
+            style={itemStyles.label}>Concepto</Label>
           <Input 
             style={localeStyles.input}
             defaultValue={budget?budget.concept:""}
             onChangeText={concept => {
-              setAmount(concept);
-              setSave(concept && amount);
+              setConcept(concept);
+              setSave(concept !== '' && amount !== '')
             }} />
         </Item>
         <View style={{flexDirection: 'row'}}>
           <View style={{width: '50%'}}>
             <Item style={{...styles.item,...localeStyles.item}}>
-              <Label style={{...itemStyles.label,color:'#1E63CB'}}>Cantidad</Label>
+              <Label style={itemStyles.label}>Cantidad</Label>
               <Input
                 style={{...localeStyles.input,textAlign:'center'}}
                 defaultValue={budget?budget.amount.toString():""}
                 onChangeText={amount => {
                   setAmount(amount);
-                  setSave(concept && amount);
+                  setSave(concept !== '' && amount !== '')
                 }}
                 keyboardType="numeric"
               />
@@ -140,7 +155,7 @@ const PRegistrar = ({navigation, route}) => {
         </View>
         <View style={{flexDirection: 'row',alignItems:'center'}}>
           <View style={{width: '50%'}}>
-            <Label style={{...itemStyles.label,color:"#1E63CB"}}>Fecha</Label>
+            <Label style={itemStyles.label}>Fecha</Label>
             <Input 
               disabled 
               style={{...styles.item,...localeStyles.item,textAlign:'center',borderWidth:1,borderColor:'white',borderBottomColor:'#1E63CB'}} 
@@ -155,7 +170,7 @@ const PRegistrar = ({navigation, route}) => {
           </View>
         </View>
         <Item style={{marginTop: 16, borderBottomWidth: 0}}>
-          <Label style={{...itemStyles.label,color:"#1E63CB"}}>Descripción</Label>
+          <Label style={itemStyles.label}>Descripción</Label>
         </Item>
         <Item>
           <Textarea

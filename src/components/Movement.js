@@ -17,18 +17,19 @@ const Movement = ({navigation, concept, date, category, amount, incomming, data}
                 <View style={{paddingVertical:8,flexDirection:'row'}}>
                     <Ionicons 
                         name={incomming?'arrow-up':'arrow-down'} 
-                        style={
-                            incomming
-                            ? localeStyles.icon
-                            : {...localeStyles.icon,backgroundColor:colors.gastos} }/>
+                        style={{
+                            ...localeStyles.icon,
+                            backgroundColor: incomming?colors.ingresos:colors.gastos
+                            }}/>
                     <View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
                         <View>
                             <Text style={localeStyles.movementName}>{concept}</Text>
                             <Text>{category}</Text>
                         </View>
-                        <Text style={incomming
-                        ? localeStyles.ammount
-                        : {...localeStyles.ammount, color:colors.gastos} }>${amount}</Text>
+                        <Text style={{
+                            ...localeStyles.ammount,
+                            color: incomming?colors.ingresos:colors.gastos
+                            }}>${amount}</Text>
                     </View>
                 </View>
             </Pressable>
@@ -51,7 +52,6 @@ const localeStyles=StyleSheet.create({
     icon: {
         justifyContent:'center',
         color:'#FFFFFF',
-        backgroundColor:colors.ingresos,
         fontSize:40,
         alignItems:"center",
         marginRight:10
@@ -63,7 +63,7 @@ const localeStyles=StyleSheet.create({
     ammount:{
         fontSize:16,
         fontWeight:'bold',
-        color:colors.ingresos
+        // color:colors.ingresos
     }
 })
 

@@ -1,38 +1,72 @@
 import React,{useState,useEffect} from 'react'
-import {View,Text,Button,ScrollView} from 'react-native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ActionButton from 'react-native-action-button';
+import {View,ScrollView,Text} from 'react-native'
 import Movement from '../../components/Movement';
-import MDetalles from './detalles'
-import MRegistrar from './registrar'
+import ActionButton from 'react-native-action-button';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native'
 
-const data = require('./data.json')
-const Stack = createNativeStackNavigator()
+// const data = require('./data.json')
 
 const MInicio = ({navigation}) => {
     const [movements, setMovements] = useState([]);
+    const isFocused = useIsFocused()
+
     const getMovementsList = async function () {
-        setMovements(data.movements)
+        try{
+            const strMovements = await AsyncStorage.getItem('movements')
+            if(strMovements !== null){
+                const arrayMovements = JSON.parse(strMovements)
+                console.log(arrayMovements.length)
+                setMovements([...arrayMovements])
+            }
+        }catch(e){alert(e)}
     }
+
+    // const setData = async (value) => {
+    //     try{
+    //         await AsyncStorage.setItem('movements',value)
+    //     }catch(e){}
+    // }
+
     useEffect(() => {
-        getMovementsList();
-    }, []);
+        // AsyncStorage.getAllKeys()
+        // .then(keys => AsyncStorage.multiRemove(keys))
+        // .then(() => alert('success'));
+        // const movement = {
+        //     "id":1,
+        //     "incomming":false,
+        //     "concept":"Concepto 1",
+        //     "date":"12/05/2022",
+        //     "category":"Comida",
+        //     "amount":123.48,
+        //     "note":"/storage/emulated/0/PersonalFinance/default.jpg"
+        // }
+        // const arrayMovement=[movement]
+        // setData(JSON.stringify(arrayMovement))        
+        getMovementsList()
+    }, [isFocused]);
     return(
-        <View style={{flex:1,paddingHorizontal:5}}>
-            <ScrollView contentContainerStyle={{flexGrow:1}}>
-                { movements.map(movement => {
+        <View style={{flex:1,paddingHorizontal:5}} >
+            <ScrollView 
+                contentContainerStyle={movements.length?{flexGrow:1}:{flexGrow:1,alignItems:'center',justifyContent:'center'}}>
+                { movements.length
+                ? movements.map(movement => {
+                    console.log(movement)
                     return(
                         <Movement 
-                            id={movement.id}
-                            incomming={movement.incomming}
+                            key={movement.id}
+                            incomming={movement.income}
                             concept={movement.concept} 
-                            date={movement.date}
+                            date={
+                                new Date(Date.parse(movement.date)).toLocaleDateString('es-MX')
+                            }
                             category={movement.category}
                             amount={movement.amount}
                             navigation={navigation}
                             data={movement}/>
                         )
                     })
+                : <Text style={{fontSize:20,fontWeight:'bold'}}>Aún sin movimientos</Text>
                 }
             </ScrollView>
             <ActionButton buttonColor="#1E63CB"
@@ -42,35 +76,4 @@ const MInicio = ({navigation}) => {
     )
 }
 
-const navigationOptions = {
-    headerTintColor: '#ffffff',
-    headerStyle: {
-        backgroundColor: '#1E63CB',
-        borderBottomColor: '#ffffff',
-    },
-    headerTitleStyle: {
-        fontSize: 20,
-    },
-    headerTitleAlign: 'center',
-};
-
-const SMInicio = () => {
-    return(
-        <Stack.Navigator screenOptions={{ headerShown: true }}>
-            <Stack.Screen 
-                name="Movements" 
-                component={MInicio} 
-                options={{...navigationOptions,title:'Movimientos' }}/>
-            <Stack.Screen 
-                name="MRegistrar" 
-                component={MRegistrar} 
-                options={{ headerShown:false }}/>
-            <Stack.Screen 
-                name="MDetalles" 
-                component={MDetalles} 
-                options={{ headerShown:false }}/>
-        </Stack.Navigator>
-    )
-}
-
-export default SMInicio
+export default MInicio
