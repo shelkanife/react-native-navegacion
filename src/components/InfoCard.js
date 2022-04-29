@@ -9,7 +9,12 @@ const InfoCard = ({icon = {}, title, text, onPress, style}) => {
   return (
     <Pressable
       onPress={onPress}
-      style={[localStyles.card, localStyles.shadow, style]}>
+      style={({pressed}) => [
+        localStyles.card,
+        localStyles.shadow,
+        {backgroundColor: pressed && onPress ? 'rgb(210, 230, 255)' : 'white'},
+        style,
+      ]}>
       {Object.keys(icon).length > 0 ? (
         <SquareIcon
           name={name}

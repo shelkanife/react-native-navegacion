@@ -7,7 +7,7 @@ import {icons} from '../utils/icons';
 
 const MovementCard = ({
   type = 'default',
-  description,
+  concept,
   category,
   amount = 0.0,
   onPress,
@@ -19,7 +19,12 @@ const MovementCard = ({
   return (
     <Pressable
       onPress={onPress}
-      style={[localStyles.card, localStyles.shadow, style]}>
+      style={({pressed}) => [
+        localStyles.card,
+        localStyles.shadow,
+        {backgroundColor: pressed && onPress ? 'rgb(210, 230, 255)' : 'white'},
+        style,
+      ]}>
       {Object.keys(icon).length > 0 ? (
         <SquareIcon
           name={name}
@@ -28,7 +33,7 @@ const MovementCard = ({
         />
       ) : null}
       <View style={localStyles.info}>
-        <Text style={localStyles.description}>{description}</Text>
+        <Text style={localStyles.concept}>{concept}</Text>
         <Text style={localStyles.category}>{category}</Text>
       </View>
       <Text style={[localStyles.category, {color: backgroundColor}]}>
@@ -57,7 +62,7 @@ const localStyles = StyleSheet.create({
     justifyContent: 'space-evenly',
     height: '100%',
   },
-  description: {
+  concept: {
     fontWeight: 'bold',
     fontSize: 18,
     margin: -6,

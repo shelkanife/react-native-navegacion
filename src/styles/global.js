@@ -2,9 +2,9 @@ import {StyleSheet, Dimensions} from 'react-native';
 
 export const colors = {
   main: '#1E63CB',
-  ingresos: '#A5D76E',
-  gastos: '#D2555A',
-  ahorros: '#FFC36E',
+  income: '#A5D76E',
+  expense: '#D2555A',
+  savings: '#FFC36E',
   text: '#262626',
 };
 

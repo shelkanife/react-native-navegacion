@@ -8,25 +8,25 @@ export const icons = {
       backgroundColor: colors.main,
     },
   },
-  ingresos: {
+  income: {
     icon: {
       name: 'arrow-up',
       color: 'white',
-      backgroundColor: colors.ingresos,
+      backgroundColor: colors.income,
     },
   },
-  gastos: {
+  expense: {
     icon: {
       name: 'arrow-down',
       color: 'white',
-      backgroundColor: colors.gastos,
+      backgroundColor: colors.expense,
     },
   },
-  ahorros: {
+  savings: {
     icon: {
       name: 'infinite',
       color: 'white',
-      backgroundColor: colors.ahorros,
+      backgroundColor: colors.savings,
     },
   },
 };
