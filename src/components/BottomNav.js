@@ -1,10 +1,11 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 // import { NavigationContainer } from '@react-navigation/native';
 
 import HomeStack from '../stacks/HomeStack';
-import SMInicio from '../screens/movimientos/inicio';
+import SMInicio from '../stacks/MovementStack';
 import SPInicio from '../screens/presupuestos/inicio';
 import SRInicio from '../screens/recomendaciones/inicio';
 import SReInicio from '../screens/recordatorios/inicio';

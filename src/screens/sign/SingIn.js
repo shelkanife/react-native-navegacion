@@ -18,6 +18,8 @@ import BottomNav from '../../components/BottomNav';
 import ForgotPassword from './ForgotPassword';
 import {auth, user} from '../../components/Auth';
 import SignUp from './SignUp';
+import Camera from '../movimientos/camera';
+import PicView from '../../components/PicView';
 
 import {styles, itemStyles} from '../../styles/global';
 
@@ -122,6 +124,8 @@ const SignNavigator = () => {
       <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
       <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name='Camera' component={Camera} />
+      <Stack.Screen name='PicView' component={PicView} />
       <Stack.Screen name="BottomNav" component={BottomNav} />
     </Stack.Navigator>
   );

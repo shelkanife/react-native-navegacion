@@ -22,7 +22,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {styles, itemStyles} from '../../styles/global';
 import {toDate} from 'firebase/firestore/lite';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PDetalle = ({navigation,route}) => {
   const {budget}=route.params
@@ -34,8 +34,15 @@ const PDetalle = ({navigation,route}) => {
       // }catch(error){
       //     alert(error)
       // }
-      
+      try{
+          let str = await AsyncStorage.getItem('budgets')
+          let array = JSON.parse(str)
+          let newArray = array.filter(item => item.id !== budget.id)
+          await AsyncStorage.setItem('budgets',JSON.stringify(newArray))
+          navigation.goBack()
+      }catch(e){alert(e)}
   }
+
   return(
       <Container style={styles.mainContainer}>
       <Header style={{backgroundColor:'#1E63CB'}}>

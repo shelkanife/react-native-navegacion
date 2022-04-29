@@ -1,76 +1,89 @@
-import React,{useState,useEffect} from 'react'
-import {View,Text,Button,ScrollView} from 'react-native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, {useState, useEffect} from 'react';
+import {View, ScrollView, Text} from 'react-native';
 import ActionButton from 'react-native-action-button';
-import Movement from '../../components/Movement';
-import MDetalles from './detalles'
-import MRegistrar from './registrar'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useIsFocused} from '@react-navigation/native';
 
-const data = require('./data.json')
-const Stack = createNativeStackNavigator()
+import MovementCard from '../../components/MovementCard';
+import MovementHeader from '../../components/MovementHeader';
+
+import {getMovementsList, mapMovementsToDates} from '../../utils/movements';
+
+import {styles} from '../../styles/global';
+
+// const data = require('./data.json')
 
 const MInicio = ({navigation}) => {
-    const [movements, setMovements] = useState([]);
-    const getMovementsList = async function () {
-        setMovements(data.movements)
-    }
-    useEffect(() => {
-        getMovementsList();
-    }, []);
-    return(
-        <View style={{flex:1,paddingHorizontal:5}}>
-            <ScrollView contentContainerStyle={{flexGrow:1}}>
-                { movements.map(movement => {
-                    return(
-                        <Movement 
-                            id={movement.id}
-                            incomming={movement.incomming}
-                            concept={movement.concept} 
-                            date={movement.date}
-                            category={movement.category}
-                            amount={movement.amount}
-                            navigation={navigation}
-                            data={movement}/>
-                        )
-                    })
-                }
-            </ScrollView>
-            <ActionButton buttonColor="#1E63CB"
-                onPress={() => navigation.navigate('MRegistrar')}
-                />
-        </View>
-    )
-}
+  const [movements, setMovements] = useState({});
+  const isFocused = useIsFocused();
 
-const navigationOptions = {
-    headerTintColor: '#ffffff',
-    headerStyle: {
-        backgroundColor: '#1E63CB',
-        borderBottomColor: '#ffffff',
-    },
-    headerTitleStyle: {
-        fontSize: 20,
-    },
-    headerTitleAlign: 'center',
+  // const setData = async (value) => {
+  //     try{
+  //         await AsyncStorage.setItem('movements',value)
+  //     }catch(e){}
+  // }
+
+  useEffect(() => {
+    // AsyncStorage.getAllKeys()
+    // .then(keys => AsyncStorage.multiRemove(keys))
+    // .then(() => alert('success'));
+    // const movement = {
+    //     "id":1,
+    //     "incomming":false,
+    //     "concept":"Concepto 1",
+    //     "date":"12/05/2022",
+    //     "category":"Comida",
+    //     "amount":123.48,
+    //     "note":"/storage/emulated/0/PersonalFinance/default.jpg"
+    // }
+    // const arrayMovement=[movement]
+    // setData(JSON.stringify(arrayMovement))
+    if (isFocused) {
+      (async () => {
+        let movements = await getMovementsList();
+        movements = mapMovementsToDates(movements); // HashMap
+        setMovements(movements);
+      })();
+    }
+    return () => {
+      // this now gets called when the component unmounts
+    };
+  }, [isFocused]);
+  return (
+    <View style={{flex: 1, paddingHorizontal: 5}}>
+      <ScrollView contentContainerStyle={styles.screenContainer}>
+        {Object.keys(movements).length ? (
+          Object.keys(movements)
+            .sort((date1, date2) => date1 < date2)
+            .map(date => (
+              <>
+                <MovementHeader key={date} fecha={date} />
+                {movements[date].map(movement => (
+                  <MovementCard
+                    type={movement.type}
+                    concept={movement.concept}
+                    category={movement.category}
+                    amount={movement.amount}
+                    key={movement.id}
+                    onPress={() =>
+                      navigation.navigate('MDetalles', {data: movement})
+                    }
+                  />
+                ))}
+              </>
+            ))
+        ) : (
+          <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+            Aún sin movimientos
+          </Text>
+        )}
+      </ScrollView>
+      <ActionButton
+        buttonColor="#1E63CB"
+        onPress={() => navigation.navigate('MRegistrar')}
+      />
+    </View>
+  );
 };
 
-const SMInicio = () => {
-    return(
-        <Stack.Navigator screenOptions={{ headerShown: true }}>
-            <Stack.Screen 
-                name="Movements" 
-                component={MInicio} 
-                options={{...navigationOptions,title:'Movimientos' }}/>
-            <Stack.Screen 
-                name="MRegistrar" 
-                component={MRegistrar} 
-                options={{ headerShown:false }}/>
-            <Stack.Screen 
-                name="MDetalles" 
-                component={MDetalles} 
-                options={{ headerShown:false }}/>
-        </Stack.Navigator>
-    )
-}
-
-export default SMInicio
+export default MInicio;
