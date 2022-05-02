@@ -3,11 +3,7 @@ import { View,ImageBackground, Image,StyleSheet } from 'react-native'
 
 const PicView = ({route}) => {
     const uri = route.params.uri
-    const [dimensions,setDimensions] = useState({})
-    useEffect(() => {
-        Image.getSize(`file:///${uri}`, (width, height) => {setDimensions({width, height})});
-    },[])
-    console.log(dimensions)
+    
     return(
         <View style={styles.container}>
             <Image 

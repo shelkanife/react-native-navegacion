@@ -25,24 +25,24 @@ import {
   Textarea,
 } from 'native-base';
 import {Picker} from 'native-base';
-import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
 import {colors} from '../../styles/global';
 import ImgNote from '../../components/ImgNote';
 import RNFS from 'react-native-fs';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useIsFocused} from '@react-navigation/native';
-
+import CalendarButton from '../../components/CalendatButton'
+import { addMovement,updateMovement } from '../../utils/movements';
 const {categories} = require('./data.json');
 
 const MRegistrar = ({navigation, route}) => {
-  const [isSalvable, setSalvable] = useState(false);
-  const [concept, setConcept] = useState('');
-  const [amount, setAmount] = useState(0.0);
-  const [date, setDate] = useState(new Date());
-  const [type, setType] = useState('income');
-  const [category, setCategory] = useState('Default category');
-  const [description, setDescription] = useState('');
-  const [pics, setPics] = useState('');
+  const movement = route.params?.movement
+  const [concept, setConcept] = useState(movement?movement.concept:'');
+  const [amount, setAmount] = useState(movement?movement.amount:0.0);
+  const [date, setDate] = useState(movement? new Date(Date.parse(movement.date)):new Date());
+  const [type, setType] = useState(movement? movement.type:'income');
+  const [category, setCategory] = useState(movement?movement.category:'Default category');
+  const [description, setDescription] = useState(movement?movement.description:'');
+  const [pics, setPics] = useState(movement?movement.pics:'');
+  const [isSalvable, setSalvable] = useState(movement?(movement.concept && movement.amount):false);
 
   const isFocused = useIsFocused();
 
@@ -55,28 +55,18 @@ const MRegistrar = ({navigation, route}) => {
     const currentDate = selectedDate;
     setDate(currentDate);
   };
-  const showMode = currentMode => {
-    DateTimePickerAndroid.open({
-      value: date,
-      onChange,
-      mode: currentMode,
-      is24Hour: true,
-    });
-  };
-  const showDatepicker = () => {
-    showMode('date');
-  };
 
   const cancel = () => {
-    RNFS.unlink(pics)
-      .then(setPics(''))
-      .catch(e => {});
-    navigation.navigate('Movements');
+    if(!movement){
+      RNFS.unlink(pics)
+        .then(setPics(''))
+        .catch(e => {});
+    }
+    navigation.goBack();
   };
-  const save = async movements => {
-    movements = JSON.parse(movements);
+
+  const save = async () => {
     const movement = {
-      id: movements.length + 1,
       concept,
       amount: new Number(Number.parseFloat(amount).toFixed(2)),
       date: new Date(date).toISOString().split('T')[0],
@@ -84,28 +74,25 @@ const MRegistrar = ({navigation, route}) => {
       category,
       description,
       pics,
-    };
-    movements.push(movement);
-    try {
-      movements = JSON.stringify(movements);
-      await AsyncStorage.setItem('movements', movements);
-      navigation.navigate('Movements');
-    } catch (e) {}
-  };
-  const saveMovement = async () => {
-    const movements = await AsyncStorage.getItem('movements');
-    if (movements !== null) {
-      save(movements);
-    } else {
-      try {
-        await AsyncStorage.setItem('movements', '[]');
-        const movements = await AsyncStorage.getItem('movements');
-        save(movements);
-      } catch (e) {
-        alert(e);
-      }
     }
-  };
+    await addMovement(movement)
+    navigation.goBack()
+  }
+
+  const update = async () => {
+    const updatedMovement = {
+      id:movement.id,
+      concept,
+      amount: new Number(Number.parseFloat(amount).toFixed(2)),
+      date:new Date(date).toISOString().split('T')[0],
+      type,
+      category,
+      description,
+      pics
+    }
+    await updateMovement(updatedMovement)
+    navigation.navigate('MDetalles',{data: updatedMovement})
+  }
 
   const deletePic = async () => {
     try {
@@ -126,18 +113,16 @@ const MRegistrar = ({navigation, route}) => {
         </Left>
         <Body>
           <Text style={{color: 'white', fontSize: 20}}>
-            Registrar movimiento
+            {movement? "Editar movimiento":"Registrar movimiento"}
           </Text>
         </Body>
         <Right>
           <Button
             transparent
             disabled={!isSalvable}
-            onPress={() => {
-              saveMovement();
-            }}>
+            onPress={movement?update:save}>
             <Text style={{color: isSalvable ? 'white' : 'grey', fontSize: 20}}>
-              Guardar
+              {movement? "Guardar":"Registrar"}
             </Text>
           </Button>
         </Right>
@@ -208,6 +193,7 @@ const MRegistrar = ({navigation, route}) => {
           <Item>
             <Input
               style={localeStyles.input}
+              defaultValue={movement?movement.concept:""}
               onChangeText={concept => {
                 setConcept(concept);
                 setSalvable(concept !== '' && amount !== '');
@@ -219,6 +205,7 @@ const MRegistrar = ({navigation, route}) => {
               <Label style={localeStyles.label}>Cantidad</Label>
               <Input
                 style={localeStyles.inputHalfWidth}
+                defaultValue={movement? movement.amount.toString():""}
                 onChangeText={amount => {
                   setSalvable(concept !== '' && amount !== '');
                   setAmount(Number.parseFloat(amount).toFixed(2));
@@ -244,11 +231,7 @@ const MRegistrar = ({navigation, route}) => {
               />
             </View>
             <View style={{width: '50%'}}>
-              <Button
-                onPress={showDatepicker}
-                style={{backgroundColor: '#1E63CB', alignSelf: 'center'}}>
-                <Icon name="calendar" />
-              </Button>
+              <CalendarButton onChangeFunction={onChange} date={date} />
             </View>
           </View>
           <Item>
@@ -283,6 +266,7 @@ const MRegistrar = ({navigation, route}) => {
                 width: '100%',
                 height: 120,
               }}
+              defaultValue={movement?movement.description:""}
               onChangeText={description => setDescription(description)}
             />
           </Item>
@@ -295,7 +279,7 @@ const MRegistrar = ({navigation, route}) => {
                 backgroundColor: colors.main,
               }}
               onPress={() => {
-                navigation.navigate('Camera');
+                navigation.navigate('Camera',{movement:movement});
               }}>
               <Text style={{color: 'white'}}>Añadir nota</Text>
               <Icon name="camera" />

@@ -6,14 +6,14 @@ import { RNCamera } from 'react-native-camera'
 import { useCamera } from 'react-native-camera-hooks'
 import {colors} from '../../styles/global'
 
-const Camera = ({navigation}) => {
+const Camera = ({navigation,route}) => {
     const [{cameraRef},{takePicture}] = useCamera(null)
     
     const savePic = (filePath,newFilePath) => {
         try{
             RNFS.moveFile(filePath,newFilePath)
             .then(() => {
-                navigation.navigate('MRegistrar',{imgPath:newFilePath})
+                navigation.navigate('MRegistrar',{imgPath:newFilePath,movement:route.params.movement})
                 console.log('Imaged saved in: '+ newFilePath)
             })
             .catch((e) => alert(e))

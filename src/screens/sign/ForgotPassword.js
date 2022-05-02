@@ -1,9 +1,20 @@
-import React from 'react';
-import {Text, View, ImageBackground, TouchableOpacity} from 'react-native';
-import {Container, Content, Button, Title} from 'native-base';
-import {styles} from '../../styles/global';
+import React,{useState} from 'react';
+import {Text, View, ImageBackground} from 'react-native';
+import {Container, Content, Button, Title, Label, Item, Input} from 'native-base';
+import {styles, itemStyles} from '../../styles/global';
+import { auth } from '../../components/Auth';
+import {sendPasswordResetEmail} from 'firebase/auth';
+import { async } from '@firebase/util';
 
-const ForgotPassword = () => {
+
+const ForgotPassword = ({navigation}) => {
+  const [email,setEmail] = useState('')
+  const handleSendEmail = async() => {
+    await sendPasswordResetEmail(auth,email)
+    alert("Revisa tu correo para reestablecer tu contraseña")
+    navigation.goBack()
+  }
+
   return (
     <Container style={styles.mainContainer}>
       <Content contentContainerStyle={{flex: 1}}>
@@ -26,8 +37,22 @@ const ForgotPassword = () => {
             }}>
             Captura el correo electrónico con el que te has registrado
           </Text>
+          <Item
+            floatingLabel
+            style={{
+              marginBottom: 10,
+              borderColor: '#1E63CB',
+              borderBottomWidth: 2,
+            }}>
+            <Label style={itemStyles.label}>Correo electrónico</Label>
+            <Input
+              style={itemStyles.txtInput}
+              onChangeText={email => setEmail(email)}
+            />
+          </Item>
           <Button style={styles.btn}>
             <Text
+              onPress={handleSendEmail}
               style={{textTransform: 'uppercase', fontSize: 16, color: '#fff'}}>
               Enviar correo
             </Text>

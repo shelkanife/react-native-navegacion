@@ -1,80 +1,53 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, ScrollView, Pressable,StyleSheet} from 'react-native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ActionButton from 'react-native-action-button';
-import {db, auth} from '../../components/Auth';
-import {collection, getDocs, query, where} from 'firebase/firestore/lite';
 import Budget from '../../components/Budget';
-import {toDate} from 'firebase/firestore/lite';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
-import PDetalle from './detalle';
-import PRegistrar from './registrar';
-// const data = require('./data.json')
-
-const Stack = createNativeStackNavigator();
+import { getBudgetsList,mapBudgetsToDates } from '../../utils/budgets' 
+import MovementHeader from '../../components/MovementHeader'
+import { styles } from '../../styles/global';
 
 const PInicio = ({navigation}) => {
   const [budgets, setBudgets] = useState([]);
   const isFocused = useIsFocused()
 
-  const getBudgets = async function () {
-    try{
-      const strBudgets = await AsyncStorage.getItem('budgets')
-      if(strBudgets !== null){
-        const arrayBudgets = JSON.parse(strBudgets)
-        console.log(arrayBudgets.length)
-        setBudgets([...arrayBudgets])
-      }
-    }catch(e){alert(e)}
-    // try {
-    //   const budgetsCol = collection(db, 'budgets');
-    //   const queryResult = query(
-    //     budgetsCol,
-    //     where('uid', '==', auth.currentUser.uid),
-    //   );
-    //   const budgetsSnapshot = await getDocs(queryResult);
-    //   const budgetsList = budgetsSnapshot.docs.map(doc => {
-    //     return {...doc.data(), id: doc.id};
-    //   });
-    //   setBudgets(budgetsList);
-    // } catch (error) {
-    //   alert(error);
-    // }
-  };
   useEffect(() => {
-    getBudgets();
+    (async() => {
+      let budgets = await getBudgetsList();
+      budgets = mapBudgetsToDates(budgets); // HashMap
+      setBudgets(budgets);
+    })
+    ()
   }, [isFocused]);
+
   return (
-    <View style={{flex: 1}}>
-      <ScrollView
-        contentContainerStyle={
-          budgets.length === 0
-            ? localeStyles.mainContainer
-            : {}
-        }>
-        {budgets.length === 0 ? (
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-            Aún sin presupuestos
-          </Text>
+    <View style={{flex: 1, paddingHorizontal: 5}}>
+      <ScrollView contentContainerStyle={
+        Object.keys(budgets).length
+        ? {flex:1, paddingTop: 20, paddingHorizontal: 20}
+        : {flex:1,justifyContent:'center',alignItems:'center'}}>
+        {Object.keys(budgets).length ? (
+          Object.keys(budgets)
+            .sort((date1, date2) => date1 < date2)
+            .map(date => (
+              <>
+                <MovementHeader key={date} fecha={date} />
+                {budgets[date].map(budget => (
+                  <Budget
+                    concept={budget.concept}
+                    key={budget.id}
+                    budgetData={budget}
+                    navigation={navigation}
+                  />
+                ))}
+              </>
+            ))
         ) : (
-          budgets.map(budget => {
-            return (
-              <Budget
-                key={budget.id}
-                date={
-                  new Date(Date.parse(budget.date)).toLocaleDateString('es-MX')
-                  //budget.date.toDate().toLocaleDateString('es-MX')
-                }
-                concept={budget.concept}
-                navigation={navigation}
-                budgetData={budget}
-              />
-            );
-          })
+          <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+            Aún sin movimientos
+          </Text>
         )}
       </ScrollView>
-
       <ActionButton
         buttonColor="#1E63CB"
         onPress={() => navigation.navigate('RegisterBudget')}
@@ -83,46 +56,16 @@ const PInicio = ({navigation}) => {
   );
 };
 
-const navigationOptions = {
-  headerTintColor: '#ffffff',
-  headerStyle: {
-    backgroundColor: '#1E63CB',
-    borderBottomColor: '#ffffff',
-  },
-  headerTitleStyle: {
-    fontSize: 20,
-  },
-  headerTitleAlign: 'center',
-};
-
-const SPInicio = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Budget"
-        component={PInicio}
-        options={{...navigationOptions, title: 'Presupuestos'}}
-      />
-      <Stack.Screen
-        name="RegisterBudget"
-        component={PRegistrar}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="DetailsBudget"
-        component={PDetalle}
-        options={{headerShown: false}}
-      />
-    </Stack.Navigator>
-  );
-};
-
 const localeStyles=StyleSheet.create({
   mainContainer:{
-    flexGrow: 1, 
-    alignItems: 'center', 
-    justifyContent: 'center'
+    paddingTop: 20,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    minHeight: '100%',
+    // flexGrow: 1, 
+    // alignItems: 'center', 
+    // justifyContent: 'center'
   }
 })
 
-export default SPInicio;
+export default PInicio
