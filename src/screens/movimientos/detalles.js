@@ -6,6 +6,7 @@ import {
   Alert,
   ImageBackground,
   Pressable,
+  ScrollView
 } from 'react-native';
 import {
   Header,
@@ -62,6 +63,11 @@ const MDetalles = ({navigation, data, route}) => {
         <Right>
           <Button
             transparent
+            onPress={() => navigation.navigate('MRegistrar',{movement:dataObj})}>
+            <Ionicons style={{color: 'white', fontSize: 25}} name="pencil" />
+          </Button>
+          <Button
+            transparent
             onPress={() => {
               Alert.alert('Eliminar', '¿Seguro quieres eliminarlo?', [
                 {text: 'Sí', onPress: deleteM},
@@ -74,7 +80,7 @@ const MDetalles = ({navigation, data, route}) => {
       </Header>
       <Content style={{padding: 16}}>
         <Card>
-          <CardItem header bordered>
+          <CardItem header style={{borderBottomWidth:1,borderBottomColor:'#ECE3E1'}}>
             <View style={{flexDirection: 'row'}}>
               <Ionicons
                 name={dataObj.type == 'income' ? 'arrow-up' : 'arrow-down'}
@@ -84,29 +90,35 @@ const MDetalles = ({navigation, data, route}) => {
                     dataObj.type == 'income' ? colors.income : colors.expense,
                 }}
               />
-              <Title style={{color: 'black', fontSize: 20}}>
+              <Text style={{fontSize:20,alignSelf:'center',textAlign:'center',flex:1}}>
                 {dataObj.concept}
-              </Title>
+              </Text>
             </View>
           </CardItem>
           <CardItem>
-            <Text style={{width: '30%', fontSize: 20}}>Categoría</Text>
-            <Text style={{width: '70%', fontSize: 20}}>{dataObj.category}</Text>
+            <Text style={{width: '40%', fontSize: 20}}>Categoría</Text>
+            <Text style={{width: '60%', fontSize: 20}}>{dataObj.category}</Text>
           </CardItem>
           <CardItem>
-            <Text style={{width: '30%', fontSize: 20}}>Cantidad</Text>
-            <Text style={{width: '70%', fontSize: 20}}>{dataObj.amount}</Text>
+            <Text style={{width: '40%', fontSize: 20}}>Cantidad</Text>
+            <Text style={{width: '60%', fontSize: 20}}>{dataObj.amount.toString()}</Text>
           </CardItem>
           <CardItem>
-            <Text style={{width: '30%', fontSize: 20}}>Fecha</Text>
-            <Text style={{width: '70%', fontSize: 20}}>
+            <Text style={{width: '40%', fontSize: 20}}>Fecha</Text>
+            <Text style={{width: '60%', fontSize: 20}}>
               {new Date(Date.parse(dataObj.date)).toLocaleDateString('es-MX')}
             </Text>
           </CardItem>
           <CardItem>
-            <Text style={{width: '30%', fontSize: 20}}>Tipo</Text>
-            <Text style={{width: '70%', fontSize: 20}}>
+            <Text style={{width: '40%', fontSize: 20}}>Tipo</Text>
+            <Text style={{width: '60%', fontSize: 20}}>
               {dataObj.type ? 'Ingreso' : 'Gasto'}
+            </Text>
+          </CardItem>
+          <CardItem>
+            <Text style={{width: '40%', fontSize: 20}}>Descripción</Text>
+            <Text style={{width: '60%', fontSize: 20}}>
+              {dataObj.description === ''? 'Sin descripción' : dataObj.description}
             </Text>
           </CardItem>
           {dataObj.pics === '' ? (

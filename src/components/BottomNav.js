@@ -6,7 +6,7 @@ import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 import HomeStack from '../stacks/HomeStack';
 import SMInicio from '../stacks/MovementStack';
-import SPInicio from '../screens/presupuestos/inicio';
+import SPInicio from '../stacks/BudgetStack';
 import SRInicio from '../screens/recomendaciones/inicio';
 import SReInicio from '../screens/recordatorios/inicio';
 

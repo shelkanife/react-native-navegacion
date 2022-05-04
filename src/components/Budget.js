@@ -1,30 +1,38 @@
 import React from 'react';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import {View, Text, Pressable} from 'react-native';
+import {View, Text, Pressable, StyleSheet, Dimensions} from 'react-native';
 import {styles} from '../screens/presupuestos/styles';
+import SquareIcon from './SquareIcon';
 
-const Budget = ({concept, date, navigation, budgetData}) => {
+const Budget = ({concept, navigation, budgetData}) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.date}>
-        <Text style={styles.textDate}>{date}</Text>
-      </View>
+    <View style={localeStyles.cardContainer}>
       <Pressable
-        onPress={() =>
-          navigation.navigate('DetailsBudget', {
-            budget: budgetData,
-          })
-        }
+        onPress={() => navigation.navigate('DetailsBudget',{budget: budgetData})}
         style={({pressed}) => ({
           backgroundColor: pressed ? 'rgb(210, 230, 255)' : 'white',
         })}>
-        <View style={styles.details}>
-          <Ionicons name="logo-usd" style={styles.icon}></Ionicons>
-          <Text style={styles.presupuestoName}>{concept}</Text>
+        <View style={localeStyles.details}>
+          <SquareIcon name="logo-usd" color='white' backgroundColor='#1E63CB' />
+          <Text style={{...styles.presupuestoName,marginHorizontal: Dimensions.get('window').width * 0.05}}>{concept}</Text>
         </View>
       </Pressable>
     </View>
   );
 };
+
+const localeStyles = StyleSheet.create({
+  cardContainer:{
+    height:Dimensions.get('window').width * 0.17,
+    borderBottomColor:"#737373",
+    borderBottomWidth:1,
+    marginBottom: 15,
+  },
+  details:{
+    display:"flex",
+    flexDirection:'row',
+    flexWrap:"wrap",
+    alignItems:"center",
+  },
+})
 
 export default Budget;

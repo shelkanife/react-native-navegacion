@@ -10,10 +10,10 @@ const styles = StyleSheet.create({
     },
     container:{
         height:80,
-        marginTop:16,
+        // marginTop:16,
         borderBottomColor:"#737373",
         borderBottomWidth:1,
-        elevation:7
+        // elevation:7
     },
     date:{
         backgroundColor:"#1E63CB",
@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         flexWrap:"wrap",
         alignItems:"center",
-        paddingTop:5,
-        paddingBottom:10
+        // paddingTop:5,
+        // paddingBottom:10
     },
     icon:{
         justifyContent:'center',
@@ -42,8 +42,9 @@ const styles = StyleSheet.create({
         marginRight:10
     },
     presupuestoName:{
-        fontSize:16,
-        fontWeight:"bold"
+        fontSize:18,
+        fontWeight:"bold",
+        flex:4
     },
     item:{
         marginBottom: 10, 

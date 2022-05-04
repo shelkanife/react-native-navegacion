@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {StyleSheet,Pressable} from 'react-native';
-import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
 import {
   Text,
   Button,
@@ -16,13 +15,10 @@ import {
   Left,
   Body,
   Title,
-  Right,
 } from 'native-base';
 import {styles, itemStyles} from './styles';
-import {collection, addDoc, Timestamp} from 'firebase/firestore/lite';
-import {db, auth} from '../../components/Auth';
-import {async} from '@firebase/util';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {addBudget,updateBudget} from '../../utils/budgets'
+import CalendarButton from '../../components/CalendatButton';
 
 const PRegistrar = ({navigation, route}) => {
   const budget = route.params?.budget
@@ -36,70 +32,35 @@ const PRegistrar = ({navigation, route}) => {
     const currentDate = selectedDate;
     setDate(currentDate);
   };
-  const showMode = currentMode => {
-    DateTimePickerAndroid.open({
-      value: date,
-      onChange,
-      mode: currentMode,
-      is24Hour: true,
-    });
-  };
-  const showDatepicker = () => {
-    showMode('date');
-  };
-
-  const save = async (budgets) =>{
-    budgets=JSON.parse(budgets)
-        const budget = {
-            "id":budgets.length + 1,
-            concept,
-            amount,
-            date,
-            description
-        }
-        budgets.push(budget)
-        try{
-            budgets=JSON.stringify(budgets)
-            await AsyncStorage.setItem('budgets',budgets)
-            navigation.goBack()
-        }catch(e){}
+  
+  const save = async () => {
+    const budget = {
+        concept,
+        amount,
+        date: new Date(date).toISOString().split('T')[0],
+        description
+    }
+    await addBudget(budget)
+    navigation.goBack()
   }
 
-  const saveBudget = async () => {
-    const budgets = await AsyncStorage.getItem('budgets')
-    if(budgets !== null){
-        save(budgets)
-    }else{
-        try{
-            await AsyncStorage.setItem('budgets','[]')
-            const budgets = await AsyncStorage.getItem('budgets')
-            save(budgets)
-        }catch(e){alert(e)}
+  const update = async () => {
+    const updatedBudget = {
+      id:budget.id,
+      concept,
+      amount,
+      date:new Date(date).toISOString().split('T')[0],
+      description
     }
-}
+    await updateBudget(updatedBudget)
+    navigation.navigate('DetailsBudget',{budget: updatedBudget})
+  }
 
-  // const addNewBudget = async () => {
-  //   if (isSavable) {
-  //     // try {
-  //     //   const docRef = await addDoc(collection(db, 'budgets'), {
-  //     //     uid: auth.currentUser.uid,
-  //     //     concept: concept.toString(),
-  //     //     date: Timestamp.fromDate(date),
-  //     //     amount: amount.toString(),
-  //     //     description: description.toString(),
-  //     //   });
-  //     //   alert('Presupuesto creado');
-  //     //   navigation.navigate('Budget');
-  //     // } catch (error) {
-  //     //   alert(error);
-  //     // }
-  //   }
-  // };
   return (
     <Container style={styles.mainContainer}>
       <Header style={{backgroundColor: '#1E63CB'}}>
         <Left>
-          <Button transparent onPress={() => navigation.navigate('Budget')}>
+          <Button transparent onPress={() => navigation.goBack()}>
             <Icon name="arrow-back"></Icon>
           </Button>
         </Left>
@@ -108,14 +69,14 @@ const PRegistrar = ({navigation, route}) => {
             {budget? "Editar presupuesto":"Crear presupuesto"}
           </Title>
         </Body>
-        <Pressable 
-          disabled={!isSavable}
-          style={{justifyContent:'center'}}
-          onPress={saveBudget}>
+          <Pressable 
+            disabled={!isSavable}
+            style={{justifyContent:'center'}}
+            onPress={budget?update:save}>
               <Text style={{fontSize:18,color:isSavable?'white':'grey'}}>
-                  {budget? 'Guardar':'Crear'}
+                  {budget?"Guardar":"Crear"}
               </Text>
-        </Pressable>
+          </Pressable>
       </Header>
       <Content style={{padding: 16}}>
         <Item style={localeStyles.item}>
@@ -162,11 +123,7 @@ const PRegistrar = ({navigation, route}) => {
               value={date.toLocaleDateString('es-MX')}/>
           </View>
           <View style={{width: '50%'}}>
-            <Button
-              onPress={showDatepicker}
-              style={{backgroundColor: '#1E63CB', alignSelf: 'center'}}>
-              <Icon name="calendar"></Icon>
-            </Button>
+            <CalendarButton onChangeFunction={onChange} date={date} />
           </View>
         </View>
         <Item style={{marginTop: 16, borderBottomWidth: 0}}>

@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import uuid from 'react-native-uuid';
 
 export const getMovementsList = async () => {
   console.log('FETCHING MOVEMENTS');
@@ -77,3 +78,26 @@ export const getAverageBalance = (movementType = 'income', movements) => {
 
   return {monthlyBalance, annualBalance};
 };
+
+export const saveMovementList = async (movements) => {
+  try{
+    movements=JSON.stringify(movements)
+    await AsyncStorage.setItem('movements',movements)
+  }catch(e) { alert(e) }
+}
+
+export const addMovement = async(movement) =>{
+  const movementsList = await getMovementsList('movements')
+  movement.id = uuid.v4()
+  movementsList.push(movement)
+  try{
+    await saveMovementList(movementsList)
+  }catch(e){alert(e)}
+}
+
+export const updateMovement = async(updatedMovement) => {
+  const movementsList = await getMovementsList('movements')
+  const index = movementsList.findIndex(item => item.id === updatedMovement.id)
+  movementsList[index] = updatedMovement
+  await saveMovementList(movementsList)
+}

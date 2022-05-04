@@ -27,13 +27,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const PDetalle = ({navigation,route}) => {
   const {budget}=route.params
   const deleteBudget = async() => {
-      // try{
-      //     const targetBudget = doc(db,'budgets',budget.id)
-      //     await deleteDoc(targetBudget)
-      //     .then(() => navigation.navigate('Budget'))
-      // }catch(error){
-      //     alert(error)
-      // }
+
       try{
           let str = await AsyncStorage.getItem('budgets')
           let array = JSON.parse(str)
@@ -76,7 +70,7 @@ const PDetalle = ({navigation,route}) => {
       </Header>
       <Content style={{padding:16}}>
           <Card>
-              <CardItem header bordered>
+              <CardItem header style={{borderBottomWidth:1,borderBottomColor:"#ECE3E1"}}>
                   <Left>
                       <Text style={{fontSize:20}}>
                           {budget.concept}
@@ -89,7 +83,7 @@ const PDetalle = ({navigation,route}) => {
                       </Text>
                   </Right>
               </CardItem>
-              <CardItem bordered>
+              <CardItem >
                   <Ionicons name='calendar'style={{color:'gray',fontSize:20}}></Ionicons>
                   <Text style={{fontSize:20, marginLeft:16}}>
                       {/* {budget.date.toDate().toLocaleDateString('es-MX')} */}
