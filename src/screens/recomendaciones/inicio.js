@@ -8,8 +8,10 @@ const Stack=createNativeStackNavigator()
 
 const RInicio = ({navigation}) => {
     return(
-        <View style={{flex:1}}>
-            <Text>Pantalla "Recomendaciones (pendiente de subir)"</Text>
+        <View style={{flex: 1, paddingHorizontal: 5}}>
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+                Pantalla "Recomendaciones (pendiente de subir)"
+            </Text>
             <Button title='Detalle de recomendacion'
             onPress={() => navigation.navigate('RecommendationsDetails')}></Button>
 

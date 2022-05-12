@@ -155,4 +155,5 @@ const localeStyles = StyleSheet.create({
     fontSize:20
   }
 })
+
 export default PRegistrar;
