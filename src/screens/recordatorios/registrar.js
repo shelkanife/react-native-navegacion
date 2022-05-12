@@ -132,7 +132,6 @@ const ReRegistrar = ({navigation, route}) => {
         </Item>
         <Item>
           <Textarea
-            placeholder="Opcional"
             style={styles.textArea}
             defaultValue={budget?budget.description:""}
             onChangeText={description => setDescription(description)}

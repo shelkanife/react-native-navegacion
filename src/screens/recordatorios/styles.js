@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         // borderBottomWidth: 2 
     },
     textArea:{
-        borderColor:'#1E63CB',
+        borderColor:'#dd7554',
         borderWidth:1,
         width:'100%',
         height:150,
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     },
     labelDate:{
         textAlign:'center',
-        borderBottomColor:'#1E63CB',
+        borderBottomColor:'#dd7554',
         borderBottomWidth:2
     }
 })
