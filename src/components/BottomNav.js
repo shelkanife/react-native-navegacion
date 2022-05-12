@@ -15,7 +15,7 @@ const nombrePantallas = {
   m: 'Movimientos',
   p: 'Presupuestos',
   r: 'Recomendaciones',
-  re: 'Notificaciones',
+  re: 'Recordatorios',
 };
 
 const Tab = createBottomTabNavigator();
