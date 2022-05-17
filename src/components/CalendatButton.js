@@ -3,7 +3,7 @@ import { Button,Icon } from 'native-base';
 import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
 import {colors} from '../styles/global'
 
-const CalendarButton = ({style,onChangeFunction,date}) =>{
+const CalendarButton = ({style,onChangeFunction,date,mode='date',iconName='calendar'}) =>{
     const showMode = currentMode => {
         DateTimePickerAndroid.open({
           value: date,
@@ -13,14 +13,14 @@ const CalendarButton = ({style,onChangeFunction,date}) =>{
         });
       };
     const showDatepicker = () => {
-        showMode('date');
+        showMode(mode);
     };
 
     return(
         <Button
         onPress={showDatepicker}
         style={{backgroundColor:colors.main, alignSelf: 'center'}}>
-            <Icon name="calendar"></Icon>
+            <Icon name={iconName}></Icon>
         </Button>
     )
 }
