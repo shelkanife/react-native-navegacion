@@ -4,40 +4,84 @@
         {"name":"Ropa","value":"Ropa"},
         {"name":"Colegiatura","value":"Colegiatura"},
         {"name":"Renta","value":"Renta"},
-        {"name":"Entretenimiento","value":"Entretenimiento"}
+        {"name":"Entretenimiento","value":"Entretenimiento"},
+        {"name":"Servicio","value":"Servicio"},
+        {"name":"Deposito","value":"Deposito"},
+        {"name":"SPID","value":"SPID"}
+
     ],
     "movements":[
         {
             "id":1,
             "incomming":false,
-            "concept":"Concepto 1",
-            "date":"12/05/2022",
+            "concept":"Compra de comida",
+            "date":"14/05/2022",
             "category":"Comida",
-            "amount":123.48
+            "amount":100.10
         },
         {
             "id":2,
             "incomming":true,
-            "concept":"Concepto 2",
+            "concept":"Pago de suscripcion de ASP",
             "date":"12/05/2022",
             "category":"Asp",
-            "amount":123.48
+            "amount":123.40
         },
         {
             "id":3,
             "incomming":false,
-            "concept":"Concepto 3",
-            "date":"12/05/2022",
+            "concept":"Pago anual de la colegiatura",
+            "date":"18/05/2022",
             "category":"Colegiatura",
-            "amount":123.48
+            "amount":1200.00
         },
         {
             "id":4,
             "incomming":true,
-            "concept":"Concepto 4",
-            "date":"12/05/2022",
+            "concept":"Pago de compra de prenda",
+            "date":"20/05/2022",
             "category":"Ropa",
-            "amount":123.48
+            "amount":370.50
+        },
+        {
+            "id":5,
+            "incomming":true,
+            "concept":"Pago mensaul de gimnasio",
+            "date":"11/05/2022",
+            "category":"Entrenamiento",
+            "amount":650.50
+        },
+        {
+            "id":6,
+            "incomming":true,
+            "concept":"Pago anual de servicio",
+            "date":"19/05/2022",
+            "category":"Servicio",
+            "amount":900.50
+        },
+        {
+            "id":7,
+            "incomming":true,
+            "concept":"Deposito a cuenta personal",
+            "date":"20/05/2022",
+            "category":"Deposito",
+            "amount":466.50
+        },
+        {
+            "id":8,
+            "incomming":true,
+            "concept":"Deposito de pago a SPID",
+            "date":"22/05/2022",
+            "category":"SPID",
+            "amount":625.50
+        },
+        {
+            "id":9,
+            "incomming":true,
+            "concept":"Pago de renta mensual",
+            "date":"01/06/2022",
+            "category":"Renta",
+            "amount":5000.00
         }
     ]
 }
