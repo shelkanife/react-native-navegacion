@@ -7,14 +7,14 @@ import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import HomeStack from '../stacks/HomeStack';
 import SMInicio from '../stacks/MovementStack';
 import SPInicio from '../stacks/BudgetStack';
+import SReInicio from '../stacks/ReminderStack';
 import SRInicio from '../screens/recomendaciones/inicio';
-import SReInicio from '../screens/recordatorios/inicio';
 
 const nombrePantallas = {
   i: 'Inicio',
   m: 'Movimientos',
   p: 'Presupuestos',
-  r: 'Recomendaciones',
+  // r: 'Recomendaciones',
   re: 'Notificaciones',
 };
 
@@ -59,7 +59,7 @@ const BottomNav = () => {
       <Tab.Screen name={nombrePantallas.i} component={HomeStack} />
       <Tab.Screen name={nombrePantallas.m} component={SMInicio} />
       <Tab.Screen name={nombrePantallas.p} component={SPInicio} />
-      <Tab.Screen name={nombrePantallas.r} component={SRInicio} />
+      {/* <Tab.Screen name={nombrePantallas.r} component={SRInicio} /> */}
       <Tab.Screen name={nombrePantallas.re} component={SReInicio} />
     </Tab.Navigator>
   );

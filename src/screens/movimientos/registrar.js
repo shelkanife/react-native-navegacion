@@ -31,7 +31,6 @@ import RNFS from 'react-native-fs';
 import {useIsFocused} from '@react-navigation/native';
 import CalendarButton from '../../components/CalendatButton'
 import { addMovement,updateMovement } from '../../utils/movements';
-const {categories} = require('./data.json');
 
 const MRegistrar = ({navigation, route}) => {
   const movement = route.params?.movement
@@ -243,15 +242,26 @@ const MRegistrar = ({navigation, route}) => {
             style={{color: 'black'}}
             selectedValue={category}
             onValueChange={value => setCategory(value)}>
-            {categories.map(category => {
-              return (
-                <Picker.Item
-                  key={category.name}
-                  label={category.name}
-                  value={category.value}
-                />
-              );
-            })}
+            <Picker.Item
+              key="Comida"
+              label="Comida"
+              value="Comida" />
+            <Picker.Item
+              key="Ropa"
+              label="Ropa"
+              value="Ropa" />
+            <Picker.Item
+              key="Colegiatura"
+              label="Colegiatura"
+              value="Colegiatura" />
+            <Picker.Item
+              key="Renta"
+              label="Renta"
+              value="Renta" />
+            <Picker.Item
+              key="Entretenimiento"
+              label="Entretenimiento"
+              value="Entretenimiento" />
           </Picker>
           <Item>
             <Label>Descripción</Label>
@@ -309,6 +319,7 @@ const localeStyles = StyleSheet.create({
     textAlign: 'center',
     borderBottomWidth: 1,
     borderBottomColor: '#1E63CB',
+    color:"#6A6766"
   },
 });
 

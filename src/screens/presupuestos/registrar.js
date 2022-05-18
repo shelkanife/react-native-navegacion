@@ -145,7 +145,8 @@ const PRegistrar = ({navigation, route}) => {
 const localeStyles = StyleSheet.create({
   item:{
     flexDirection:'column',
-    alignItems:'flex-start'
+    alignItems:'flex-start',
+    color:"#6A6766"
   },
   input:{
     width:'100%',

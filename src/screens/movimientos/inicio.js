@@ -11,33 +11,11 @@ import {getMovementsList, mapMovementsToDates} from '../../utils/movements';
 
 import {styles} from '../../styles/global';
 
-// const data = require('./data.json')
-
 const MInicio = ({navigation}) => {
   const [movements, setMovements] = useState({});
   const isFocused = useIsFocused();
 
-  // const setData = async (value) => {
-  //     try{
-  //         await AsyncStorage.setItem('movements',value)
-  //     }catch(e){}
-  // }
-
   useEffect(() => {
-    // AsyncStorage.getAllKeys()
-    // .then(keys => AsyncStorage.multiRemove(keys))
-    // .then(() => alert('success'));
-    // const movement = {
-    //     "id":1,
-    //     "incomming":false,
-    //     "concept":"Concepto 1",
-    //     "date":"12/05/2022",
-    //     "category":"Comida",
-    //     "amount":123.48,
-    //     "note":"/storage/emulated/0/PersonalFinance/default.jpg"
-    // }
-    // const arrayMovement=[movement]
-    // setData(JSON.stringify(arrayMovement))
     if (isFocused) {
       (async () => {
         let movements = await getMovementsList();

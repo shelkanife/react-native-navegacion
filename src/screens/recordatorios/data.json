@@ -1,0 +1,45 @@
+{
+    "reminders":[
+        {
+            "id":1,
+            "amount":800,
+            "concept":"Reminder 1",
+            "date":"Jueves Abril 14 2022 21:10:23 GMT-0500 ",
+            "description":"Pago de servicio electrico",
+            "uid":"usr1"
+        },
+        {
+            "id":2,
+            "amount":1200,
+            "concept":"Reminder 2",
+            "date":"Sabado Abril 16 2022 21:10:23 GMT-0500 ",
+            "description":"Pago de servicio de agua",
+            "uid":"usr2"
+        },
+        {   
+            "id":3,
+            "amount":300,
+            "concept":"Reminder 3",
+            "date":"Martes Abril 12 2022 21:10:23 GMT-0500 ",
+            "description":"Ahorro semanal",
+            "uid":"usr3"
+        },
+        {
+            "id":4,
+            "amount":500,
+            "concept":"Reminder 4",
+            "date":"Lunes Abril 18 2022 21:10:23 GMT-0500 ",
+            "description":"Pago de servicio de internet",
+            "uid":"usr4"
+        },
+        {
+            "id":5,
+            "amount":700,
+            "concept":"Reminder 5",
+            "date":"Martes Abril 19 2022 21:10:23 GMT-0500 ",
+            "description":"Compra semanal ",
+            "uid":"usr5"
+        }
+        
+    ]
+}
